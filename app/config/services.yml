@@ -1,0 +1,70 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    entity_manager:
+        abstract: true
+        class: AppBundle\Service\EntityService
+        arguments: [ @doctrine.orm.entity_manager ]
+
+    group_manager:
+        class: AppBundle\Service\GroupService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Group"]]
+
+    bear_manager:
+        class: AppBundle\Service\BearService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Bear"]]
+
+    product_manager:
+        class: AppBundle\Service\ProductService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Product"]]
+
+    backing_manager:
+        class: AppBundle\Service\BackingService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Backing"]]
+
+    letter_manager:
+        class: AppBundle\Service\LetterService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Letter"]]
+
+    accessory_manager:
+        class: AppBundle\Service\AccessoryService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Accessory"]]
+
+    ribbon_manager:
+        class: AppBundle\Service\RibbonService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Ribbon"]]
+
+    accentbow_manager:
+        class: AppBundle\Service\AccentBowService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["AccentBow"]]
+
+    customer_manager:
+        class: AppBundle\Service\CustomerService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Customer"]]
+
+    category_manager:
+        class: AppBundle\Service\CategoryService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Category"]]

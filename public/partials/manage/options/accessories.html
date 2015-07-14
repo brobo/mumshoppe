@@ -1,0 +1,122 @@
+<div class="form-inline form-group">
+	<label>View Category: </label>
+	<select class="form-control" ng-options="category.id as category.name for category in categories" ng-model="selectedCategory">
+		<option value="">All</option>
+	</select>
+	<button class="btn btn-small btn-default" ng-click="editCategories()">Edit Categories</button>
+	<div class="table-responsive">
+		<button class="btn btn-success" ng-click="addAccessory()">Add Accessory</button>
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>Accessory Name</th>
+					<th>Category</th>
+					<th>Price</th>
+					<th ng-repeat="group in groups">{{ group.name }}</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="accessory in accessories | filter : filterAccessories">
+					<td>{{ accessory.name }}</td>
+					<td>{{ accessory.category.name }}</td>
+					<td>{{ accessory.price | currency}}</td>
+					<td ng-repeat="group in groups"><i class="fa fa-check" ng-show="hasGroup(accessory, group)"></i></td>
+					<td>
+						<button class="btn btn-xs btn-warning" ng-click="editAccessory(accessory)">
+							<i class="fa fa-pencil"></i> Edit
+						</button>
+						<button class="btn btn-xs btn-danger" ng-click="deleteAccessory(accessory)">
+							<i class="fa fa-trash"></i> Delete
+						</button>
+					</td>
+				</tr>
+				<tr ng-show="!accessories.length">
+					<td><i class="fa fa-spin fa-circle-o-notch"></i></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script type="text/ng-template" id="editCategories.html">
+	<div class="modal-header">
+		<h3>Edit Categories</h3>
+	</div>
+	<div class="modal-body table-responsive">
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="category in parentScope.categories">
+					<td>{{ category.name }}</td>
+					<td>
+						<button class="btn btn-xs btn-danger" ng-click="deleteCategory(category)" ng-hide="category.tracker.active()">
+							<i class="fa fa-trash"></i> Delete
+						</button>
+						<button class="btn btn-xs btn-danger" ng-show="category.tracker.active()" disabled>
+							<i class="fa fa-spin fa-circle-o-notch"></i>
+						</button>
+					<td>
+				</tr>
+				<tr ng-show="!parentScope.categories.length">
+					<td><i class="fa fa-spin fa-circle-o-notch"></i></td>
+				</tr>
+				<tr>
+					<td>
+						<div class="input-group">
+							<input class="form-control" ng-model="categoryName" default="New Category">
+							<span class="input-group-btn">
+								<button class="btn btn-success" ng-hide="addTracker.active()" ng-click="addCategory()">Add Category</button>
+								<button class="btn btn-success" ng-show="addTracker.active()" disabled><i class="fa fa-spin fa-circle-o-notch"></i></button>
+							</span>
+						</div>
+					</td>
+				</tr>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-default" ng-click="close()">Close</button>
+	</div>
+</script>
+
+<script type="text/ng-template" id="editAccessory.html">
+	<div class="modal-header">
+		<h3>Edit Accessory</h3>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label>Name</label>
+			<input type="text" class="form-control" ng-model="accessory.name" />
+		</div>
+		<div class="form-group">
+			<label>Category</label>
+			<select class="form-control" ng-options="category.id as category.name for category in categories" ng-model="accessory.category">
+				<option value="">no category</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Price</label>
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-usd"></i></span>
+				<input type="number" class="form-control" ng-model="accessory.price" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label>Groups</label>
+			<label class="checkbox-inline" ng-repeat="group in groups">
+				<input type="checkbox" ng-model="accessory.groups[group.id]" />
+				{{ group.name }}
+			</label>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-success" ng-hide="tracker.active()" ng-click="save()">Save</button>
+		<button class="btn btn-success" ng-show="tracker.active()" disabled><i class="fa fa-spin fa-circle-o-notch"></i></button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+	</div>
+</script>

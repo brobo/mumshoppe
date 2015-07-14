@@ -1,0 +1,29 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="categories")
+ */
+class Category {
+
+	/**
+	 * @ORM\Id
+	 * @ORM\Column(type="integer")
+	 * @ORM\GeneratedValue
+	 * @var int
+	 */
+	protected $int;
+
+	/**
+	 * @ORM\Column(type="string", length=100)
+	 * @Assert\NotBlank()
+	 * @var string
+	 */
+	protected $name;
+}

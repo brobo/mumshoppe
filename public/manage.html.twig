@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="mumshoppe-manage">
+    <head>
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        {% stylesheets
+            'css/bootstrap.min.css'
+            'css/sb-admin.css'
+            'css/morris.css'
+            'css/font-awesome.min.css'
+            filter="cssrewrite" %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    </head>
+    <body>
+        <div ui-view>
+        </div>
+
+        {% javascripts
+            'js/vendor.js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% javascripts
+            'js/partials.min.js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% javascripts
+            'js/controllers.min.js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        {% javascripts
+            'js/services.min.js' %}
+            <script src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        
+    </body>
+</html>

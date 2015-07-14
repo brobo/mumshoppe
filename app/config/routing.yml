@@ -1,0 +1,49 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+manage:
+    path: /manage
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template: manage/index.html.twig
+
+group:
+    resource: "@AppBundle/Controller/GroupController.php"
+    type: annotation
+
+bear:
+    resource: "@AppBundle/Controller/BearController.php"
+    type: annotation
+
+backing:
+    resource: "@AppBundle/Controller/BackingController.php"
+    type: annotation
+
+product:
+    resource: "@AppBundle/Controller/ProductController.php"
+    type: annotation
+
+letter:
+    resource: "@AppBundle/Controller/LetterController.php"
+    type: annotation
+
+accessory:
+    resource: "@AppBundle/Controller/AccessoryController.php"
+    type: annotation
+
+ribbon:
+    resource: "@AppBundle/Controller/RibbonController.php"
+    type: annotation
+
+accentbow:
+    resource: "@AppBundle/Controller/AccentBowController.php"
+    type: annotation
+
+category:
+    resource: "@AppBundle/Controller/CategoryController.php"
+    type: annotation
+
+customer:
+    resource: "@AppBundle/Controller/CustomerController.php"
+    type: annotation
