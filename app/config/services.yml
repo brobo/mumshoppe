@@ -68,3 +68,9 @@ services:
         parent: entity_manager
         calls:
             - [setRepo, ["Category"]]
+
+    image_manager:
+        class: AppBundle\Service\ImageService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Image"]]

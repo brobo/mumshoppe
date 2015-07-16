@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * @ORM\Entity
  * @ORM\Table(name="images")
+ * @ORM\HasLifecycleCallbacks
  */
 class Image {
 
@@ -32,6 +33,44 @@ class Image {
      */
     private $file;
 
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload() {
+        if ($this->getFile() !== null) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->path = $filename . '.' . $this->getFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload() {
+        if ($this->getFile() === null) {
+            return;
+        }
+
+        $this->getFile()->move(
+            $this->getUploadRootDir(),
+            $this->path
+        );
+
+        $this->file = null;
+    }
+
+    /** 
+     * @ORM\PostRemove()
+     */
+    public function removeUpload() {
+        $file = $this->getAbsolutePath();
+        if ($file) {
+            unlink($file);
+        }
+    }
+
 	public function getAbsolutePath() {
 		return $this->getUploadRootDir() . '/' . $this->path;
 	}
@@ -43,7 +82,7 @@ class Image {
 
 	protected function getUploadRootDir()
 	{
-		return __DIR__ . '/../../../../' . $this->getUploadDir();
+		return __DIR__ . '/../../../web/' . $this->getUploadDir();
 	}
 
 	protected function getUploadDir()
@@ -93,6 +132,13 @@ class Image {
      */
     public function setFile(UploadedFile $file) {
         $this->file = $file;
+
+        if (isset($this->path)) {
+            $this->temp = $this->path;
+            $this->path = null;
+        } else {
+            $this->path = 'initial';
+        }
 
         return $this;
     }

@@ -15,7 +15,7 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('path')
+            // ->add('path')
             ->add('file')
         ;
     }
@@ -26,7 +26,8 @@ class ImageType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Image'
+            'data_class' => 'AppBundle\Entity\Image',
+            'csrf_protection' => false
         ));
     }
 

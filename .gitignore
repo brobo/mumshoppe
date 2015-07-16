@@ -12,4 +12,5 @@
 /composer.lock
 /public/node_modules/*
 /public/build/*
+/web/uploads/*
 

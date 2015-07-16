@@ -14,7 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * @Route("/api/bear")
  */
-class BearController extends EntityController {
+class BearController extends ImageController {
 
 	public function getBearManager() {
 		return $this->get('bear_manager');
