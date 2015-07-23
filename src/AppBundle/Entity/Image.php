@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @ORM\Entity
@@ -149,6 +150,10 @@ class Image {
      * @return UploadedFile
      */
     public function getFile() {
+        if (!isset($this->file)) {
+            $this->file = new File($this->getAbsolutePath());
+        }
+        
         return $this->file;
     }
     

@@ -5,7 +5,6 @@ var ngHtml2Js = require("gulp-ng-html2js");
 var uglify = require("gulp-uglify");
 var merge = require('merge-stream');
 var rename = require('gulp-rename');
-var watch = require('gulp-watch');
 
 
 var dest = "../web/"
@@ -14,7 +13,7 @@ gulp.task('default', function() {
 
 });
 
-gulp.task('manage', ['vendor', 'controller', 'service', 'partials', 'twig'], function() {
+gulp.task('manage', ['vendor', 'controller', 'service', 'partials'], function() {
 	gulp.src('build/*')
 		// .pipe(concat('manage.min.js'))
 		.pipe(gulp.dest(dest + 'js/'));

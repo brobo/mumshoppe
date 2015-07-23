@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
 
 
 abstract class RestController extends Controller {
@@ -15,6 +17,10 @@ abstract class RestController extends Controller {
 		$response->setStatusCode($status);
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
+	}
+
+	public function respondFile($filePath, $status = 200) {
+		return new BinaryFileResponse($filePath, $status);
 	}
 
 	public function fail($errors = null) {

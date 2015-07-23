@@ -12,89 +12,97 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * @Route("/api/letter")
  */
-class LetterController extends RestController {
+class LetterController extends EntityController {
 
 	public function getLetterManager() {
 		return $this->get("letter_manager");
 	}
 
-	/**
-	 * @Route("/")
-	 * @Method({"GET"})
-	 */
-	public function indexAction() {
-		$letters = $this->getLetterManager()->findAll();
-
-		return $this->respondJson($letters);
+	public function getEntityManager() {
+		return $this->getLetterManager();
 	}
 
-	/**
-	 * @Route("/{id}")
-	 * @Method({"GET"})
-	 */
-	public function showAction($id) {
-		$letter = $this->getLetterManager()->findById($id);
-
-		if ($letter === null) {
-			return $this->fail();
-		} else {
-			return $this->respondJson($letter);
-		}
+	public function __construct() {
+		parent::__construct('Letter', 'LetterType');
 	}
 
-	/**
-	 * @Route("/")
-	 * @Method({"POST"})
-	 */
-	public function postAction(Request $request) {
-		$letter = new Letter();
+	// /**
+	//  * @Route("/")
+	//  * @Method({"GET"})
+	//  */
+	// public function indexAction() {
+	// 	$letters = $this->getLetterManager()->findAll();
 
-		$form = $this->createForm(new LetterType(), $letter);
-		$form->submit($request->request->all());
+	// 	return $this->respondJson($letters);
+	// }
 
-		if ($form->isValid()) {
-			$this->getLetterManager()->save($letter);
-			return $this->respondJson($letter, 200);
-		} else {
-			return $this->fail($form->getErrors());
-		}
-	}
+	// /**
+	//  * @Route("/{id}")
+	//  * @Method({"GET"})
+	//  */
+	// public function showAction($id) {
+	// 	$letter = $this->getLetterManager()->findById($id);
 
-	/**
-	 * @Route("/{id}")
-	 * @Method({"PUT"})
-	 */
-	public function putAction(Request $request, $id) {
-		$letter = $this->getLetterManager()->findById($id);
+	// 	if ($letter === null) {
+	// 		return $this->fail();
+	// 	} else {
+	// 		return $this->respondJson($letter);
+	// 	}
+	// }
 
-		if ($letter === null) {
-			return $this->fail();
-		} else {
-			$form = $this->createForm(new LetterType(), $letter);
-			$form->submit($request->request->all());
+	// /**
+	//  * @Route("/")
+	//  * @Method({"POST"})
+	//  */
+	// public function postAction(Request $request) {
+	// 	$letter = new Letter();
 
-			if ($form->isValid()) {
-				$this->getLetterManager()->save($letter);
-				return $this->respondJson($letter, 200);
-			} else {
-				return $this->fail($form->getErrors());
-			}
-		}
-	}
+	// 	$form = $this->createForm(new LetterType(), $letter);
+	// 	$form->submit($request->request->all());
 
-	/**
-	 * @Route("/{id}")
-	 * @Method({"DELETE"})
-	 */
-	public function deleteAction($id) {
-		$letter = $this->getLetterManager()->findById($id);
+	// 	if ($form->isValid()) {
+	// 		$this->getLetterManager()->save($letter);
+	// 		return $this->respondJson($letter, 200);
+	// 	} else {
+	// 		return $this->fail($form->getErrors());
+	// 	}
+	// }
 
-		if ($letter === null) {
-			return $this->fail();
-		} else {
-			$this->getLetterManager()->delete($letter);
-			return $this->succeed();
-		}
-	}
+	// /**
+	//  * @Route("/{id}")
+	//  * @Method({"PUT"})
+	//  */
+	// public function putAction(Request $request, $id) {
+	// 	$letter = $this->getLetterManager()->findById($id);
+
+	// 	if ($letter === null) {
+	// 		return $this->fail();
+	// 	} else {
+	// 		$form = $this->createForm(new LetterType(), $letter);
+	// 		$form->submit($request->request->all());
+
+	// 		if ($form->isValid()) {
+	// 			$this->getLetterManager()->save($letter);
+	// 			return $this->respondJson($letter, 200);
+	// 		} else {
+	// 			return $this->fail($form->getErrors());
+	// 		}
+	// 	}
+	// }
+
+	// /**
+	//  * @Route("/{id}")
+	//  * @Method({"DELETE"})
+	//  */
+	// public function deleteAction($id) {
+	// 	$letter = $this->getLetterManager()->findById($id);
+
+	// 	if ($letter === null) {
+	// 		return $this->fail();
+	// 	} else {
+	// 		$this->getLetterManager()->delete($letter);
+	// 		return $this->succeed();
+	// 	}
+	// }
 
 }

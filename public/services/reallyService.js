@@ -1,5 +1,5 @@
 angular.module('service.really', ['ui.bootstrap'])
-	.factory('ReallyService', ['$rootScope', '$modal', function($rootScope, $modal) {
+	.factory('ReallyService', ['$modal', function($modal) {
 		var defaults = {
 			head: 'Really?',
 			body: 'Please confirm that this something you want to do.',

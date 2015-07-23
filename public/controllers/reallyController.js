@@ -8,7 +8,7 @@ angular.module('controller.really', [])
 	function($scope, $modalInstance, promiseTracker, data, callback) {
 
 		$scope.data = data;
-		$scope.cancel = modalInstance.dismiss;
+		$scope.cancel = $modalInstance.dismiss;
 		$scope.tracker = promiseTracker();
 
 		$scope.confirm = function() {

@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation\SerializedName;
  * @ORM\Entity
  * @ORM\Table(name="bears")
  */
-class Bear {
+class Bear extends VisualEntity {
 
 	/**
 	 * @ORM\Id

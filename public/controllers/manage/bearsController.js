@@ -3,10 +3,11 @@ angular.module('manage.controller.bears', [])
 	'$scope',
 	'$modal',
 	'AlertService',
+	'ImageEditService',
 	'ReallyService',
 	'BearService',
 	'GroupService',
-	function($scope, $modal, AlertService, ReallyService, BearService, GroupService) {
+	function($scope, $modal, AlertService, ImageEditService, ReallyService, BearService, GroupService) {
 
 		function updateBears() {
 			BearService.findAll().success(function(data) {
@@ -30,6 +31,10 @@ angular.module('manage.controller.bears', [])
 				}
 			}
 			return false;
+		}
+
+		$scope.openImageModal = function(bear) {
+			ImageEditService.open(BearService.imageUrl(bear.id), BearService.uploadImage.bind(null, bear.id));
 		}
 
 		$scope.openAddModal = function() {

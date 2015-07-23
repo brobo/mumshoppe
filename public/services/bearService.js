@@ -13,6 +13,17 @@ angular.module('service.bear', [])
 			},
 			delete: function(id) {
 				return $http.delete('api/bear/' + id);
+			},
+			uploadImage: function(id, image) {
+				var fd = new FormData();
+				fd.append('file', image);
+				return $http.post('api/bear/' + id + '/image', fd, {
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				});
+			},
+			imageUrl: function(id) {
+				return 'api/bear/' + id + '/image';
 			}
 		};
 

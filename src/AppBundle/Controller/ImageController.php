@@ -21,25 +21,39 @@ abstract class ImageController extends EntityController {
 	/**
 	 * @Route("/{id}/image")
 	 * @Method({"GET"})
+	 * @var int $id Represents the id of the entity this image belongs to
 	 */
 	public function getImageAction($id) {
-		
+		$entity = $this->getEntityManager()->findById($id);
+		if ($entity === null || $entity->getImage() == null) {
+			return $this->fail();
+		} else {
+			return $this->respondFile($entity->getImage()->getAbsolutePath());
+		}
 	}
 
 	/**
 	 * @Route("/{id}/image")
 	 * @Method({"POST"})
+	 * @var int $id Represents the id of the entity this image belongs to
 	 */
 	public function setImageAction($id, Request $request) {
-		$image = new Image();
-		$image->setFile($request->files->get('file'));
-
-		if ($request->files->get('file') != null) {
-			$image->setFile($request->files->get('file'));
-			$this->getImageManager()->save($image);
-			return $this->succeed();
-		} else {
+		$entity = $this->getEntityManager()->findById($id);
+		if ($entity === null) {
 			return $this->fail();
+		} else {
+		$image = new Image();
+			$image->setFile($request->files->get('file'));
+
+			if ($request->files->get('file') != null) {
+				$image->setFile($request->files->get('file'));
+				$entity->setImage($image);
+				$this->getImageManager()->save($image);
+				$this->getEntityManager()->save($entity);
+				return $this->succeed();
+			} else {
+				return $this->fail();
+			}
 		}
 	}
 

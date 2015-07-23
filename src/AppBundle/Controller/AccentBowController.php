@@ -12,88 +12,96 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * @Route("/api/accentbow")
  */
-class AccentBowController extends RestController {
+class AccentBowController extends ImageController {
 
 	public function getAccentBowManager() {
 		return $this->get("accentbow_manager");
 	}
 
-	/**
-	 * @Route("/")
-	 * @Method({"GET"})
-	 */
-	public function indexAction() {
-		$bows = $this->getAccentBowManager()->findAll();
-
-		return $this->respondJson($bows);
+	public function getEntityManager() {
+		return $this->getAccentBowManager();
 	}
 
-	/**
-	 * @Route("/{id}")
-	 * @Method({"GET"})
-	 */
-	public function showAction($id) {
-		$bow = $this->getAccentBowManager()->findById($id);
-
-		if ($bow === null) {
-			return $this->fail();
-		} else {
-			return $this->respondJson($bow);
-		}
+	public function __construct() {
+		parent::__construct('AccentBow', 'AccentBowType');
 	}
 
-	/**
-	 * @Route("/")
-	 * @Method({"POST"})
-	 */
-	public function postAction(Request $request) {
-		$bow = new AccentBow();
+	// /**
+	//  * @Route("/")
+	//  * @Method({"GET"})
+	//  */
+	// public function indexAction() {
+	// 	$bows = $this->getAccentBowManager()->findAll();
 
-		$form = $this->createForm(new AccentBowType(), $bow);
-		$form->submit($request->request->all());
+	// 	return $this->respondJson($bows);
+	// }
 
-		if ($form->isValid()) {
-			$this->getAccentBowManager()->save($bow);
-			return $this->respondJson($bow);
-		} else {
-			return $this->fail($form->getErrors());
-		}
-	}
+	// /**
+	//  * @Route("/{id}")
+	//  * @Method({"GET"})
+	//  */
+	// public function showAction($id) {
+	// 	$bow = $this->getAccentBowManager()->findById($id);
 
-	/**
-	 * @Route("/{id}")
-	 * @Method({"PUT"})
-	 */
-	public function putAction(Request $request, $id) {
-		$bow = $this->getAccentBowManager()->findById($id);
+	// 	if ($bow === null) {
+	// 		return $this->fail();
+	// 	} else {
+	// 		return $this->respondJson($bow);
+	// 	}
+	// }
 
-		if ($bow === null) {
-			return $this->fail();
-		} else {
-			$form = $this->createForm(new AccentBowType(), $bow);
-			$form->submit($request->request->all());
+	// /**
+	//  * @Route("/")
+	//  * @Method({"POST"})
+	//  */
+	// public function postAction(Request $request) {
+	// 	$bow = new AccentBow();
 
-			if ($form->isValid()) {
-				$this->getAccentBowManager()->save($bow);
-				return $this->respondJson($bow);
-			} else {
-				return $this->fail($form->getErrors());
-			}
-		}
-	}
+	// 	$form = $this->createForm(new AccentBowType(), $bow);
+	// 	$form->submit($request->request->all());
 
-	/**
-	 * @Route("/{id}")
-	 * @Method({"DELETE"})
-	 */
-	public function deleteAction($id) {
-		$bow = $this->getAccentBowManager()->findById($id);
+	// 	if ($form->isValid()) {
+	// 		$this->getAccentBowManager()->save($bow);
+	// 		return $this->respondJson($bow);
+	// 	} else {
+	// 		return $this->fail($form->getErrors());
+	// 	}
+	// }
 
-		if ($bow === null) {
-			return $this->fail();
-		} else {
-			$this->getAccentBowManager()->delete($bow);
-			return $this->succeed();
-		}
-	}
+	// /**
+	//  * @Route("/{id}")
+	//  * @Method({"PUT"})
+	//  */
+	// public function putAction(Request $request, $id) {
+	// 	$bow = $this->getAccentBowManager()->findById($id);
+
+	// 	if ($bow === null) {
+	// 		return $this->fail();
+	// 	} else {
+	// 		$form = $this->createForm(new AccentBowType(), $bow);
+	// 		$form->submit($request->request->all());
+
+	// 		if ($form->isValid()) {
+	// 			$this->getAccentBowManager()->save($bow);
+	// 			return $this->respondJson($bow);
+	// 		} else {
+	// 			return $this->fail($form->getErrors());
+	// 		}
+	// 	}
+	// }
+
+	// /**
+	//  * @Route("/{id}")
+	//  * @Method({"DELETE"})
+	//  */
+	// public function deleteAction($id) {
+	// 	$bow = $this->getAccentBowManager()->findById($id);
+
+	// 	if ($bow === null) {
+	// 		return $this->fail();
+	// 	} else {
+	// 		$this->getAccentBowManager()->delete($bow);
+	// 		return $this->succeed();
+	// 	}
+	// }
 }

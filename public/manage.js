@@ -12,6 +12,8 @@ var app = angular.module('mumshoppe-manage', [
 	'manage.controller.letters',
 	'manage.controller.bears',
 	'manage.controller.accessories',
+	'manage.controller.imageEdit',
+	'manage.service.imageEdit',
 	'service.really',
 	'service.group',
 	'service.product',

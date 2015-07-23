@@ -1,0 +1,16 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ */
+abstract class VisualEntity {
+
+	/**
+	 * @ORM\OneToOne(targetEntity="Image")
+	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+	 */
+	protected $image;
+}

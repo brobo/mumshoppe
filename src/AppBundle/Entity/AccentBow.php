@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="accentbows")
  */
-class AccentBow {
+class AccentBow extends VisualEntity {
 
 	/**
 	 * @ORM\Column(type="integer")
