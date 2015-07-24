@@ -4,11 +4,12 @@ angular.module('manage.controller.backings', [])
 	'$modal',
 	'$q',
 	'AlertService',
+	'ImageEditService',
 	'ReallyService',
 	'ProductService',
 	'GroupService',
 	'BackingService',
-	function($scope, $modal, $q, AlertService, ReallyService, ProductService, GroupService, BackingService) {
+	function($scope, $modal, $q, AlertService, ImageEditService, ReallyService, ProductService, GroupService, BackingService) {
 
 		function updateBackings() {
 			$q.all([
@@ -23,6 +24,10 @@ angular.module('manage.controller.backings', [])
 			});
 		}
 		updateBackings();
+
+		$scope.openImageModal = function(backing) {
+			ImageEditService.open(BackingService.imageUrl(backing.id), BackingService.uploadImage.bind(null, backing.id));
+		}
 
 		var groups;
 		GroupService.findAll().success(function(data) {

@@ -4,10 +4,11 @@ angular.module('manage.controller.accentbows', [])
 	'$modal',
 	'$q',
 	'AlertService',
+	'ImageEditService',
 	'ReallyService',
 	'GroupService',
 	'AccentBowService',
-	function($scope, $modal, $q, AlertService, ReallyService, GroupService, AccentBowService) {
+	function($scope, $modal, $q, AlertService, ImageEditService, ReallyService, GroupService, AccentBowService) {
 
 		function updateBows() {
 			$q.all([
@@ -22,6 +23,10 @@ angular.module('manage.controller.accentbows', [])
 			});
 		}
 		updateBows();
+
+		$scope.openImageModal = function(bow) {
+			ImageEditService.open(AccentBowService.imageUrl(bow.id), AccentBowService.uploadImage.bind(null, bow.id));
+		}
 
 		$scope.addBow = function(group) {
 			var modal = $modal.open({

@@ -4,11 +4,12 @@ angular.module('manage.controller.accessories', [])
 	'$modal',
 	'promiseTracker',
 	'AlertService',
+	'ImageEditService',
 	'ReallyService',
 	'CategoryService',
 	'GroupService',
 	'AccessoryService',
-	function($scope, $modal, promiseTracker, AlertService, ReallyService, CategoryService, GroupService, AccessoryService) {
+	function($scope, $modal, promiseTracker, AlertService, ImageEditService, ReallyService, CategoryService, GroupService, AccessoryService) {
 
 		$scope.updateCategories = function() {
 			CategoryService.findAll().success(function(data) {
@@ -21,6 +22,10 @@ angular.module('manage.controller.accessories', [])
 			});
 		}
 		$scope.updateCategories();
+
+		$scope.openImageModal = function(accessory) {
+			ImageEditService.open(AccessoryService.imageUrl(accessory.id), AccessoryService.uploadImage.bind(null, accessory.id));
+		}
 
 		function updateAccessories() {
 			AccessoryService.findAll().success(function(data) {

@@ -14,6 +14,17 @@ angular.module('service.backing', [])
 			},
 			delete: function(id) {
 				return $http.delete('api/backing/' + id);
+			},
+			imageUrl: function(id) {
+				return 'api/backing/' + id + '/image';
+			},
+			uploadImage: function(id, image) {
+				var fd = new FormData();
+				fd.append('file', image);
+				return $http.post('api/backing/' + id + '/image', fd, {
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				});
 			}
 
 		};

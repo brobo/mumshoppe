@@ -40,20 +40,16 @@ angular.module('manage.controller.imageEdit', [])
 		}
 
 		$scope.onUpload = function(event) {
-			console.log(event.target.files);
 			var reader = new FileReader();
 			reader.onloadend = function(event) {
-				console.log('onloadend');
 				var img = new Image();
 				img.src = reader.result;
 				img.onload = function() {
-					console.log('onloaded');
 					var max = 250;
 					var imageWidth = img.width;
 					var imageHeight = img.height;
 
 					var factor = max / Math.max(img.width, img.height);
-					console.log(factor);
 					if (factor < 1) {
 						imageWidth = img.width * factor;
 						imageHeight = img.height * factor;
@@ -67,7 +63,6 @@ angular.module('manage.controller.imageEdit', [])
 					ctx.drawImage(this, 0, 0, imageWidth, imageHeight);
 
 					$scope.dataURI = canvas.toDataURL('image/png');
-					console.log($scope.dataURI);
 				}
 			}
 			reader.readAsDataURL(event.target.files[0]);
