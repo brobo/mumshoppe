@@ -1,0 +1,24 @@
+<div id="wrapper">
+	<div class="navbar-inverse collapse navbar-collapse navbar-ex1-collapse">
+		<ul class="nav navbar-nav side-nav">
+			<li><a><i class="fa fa-fw fa-heart-o fa-inverse"></i> Mums</a></li>
+			<li><a><i class="fa fa-fw fa-shopping-cart fa-inverse"></i> Shoppe Options</a></li>
+		</ul>
+	</div>
+	<div id="page-wrapper">
+		<div class="container-fluid">
+			
+			<div ng-controller="AlertsController">
+				<div ng-repeat="alert in alerts">
+					<alert type="{{ alert.type }}" class="alert" ng-click="closeAlert(alert)">
+						{{ alert.message }}
+						<small>Click to dismiss</small>
+					</alert>
+				</div>
+			</div>
+
+			<div ui-view></div>
+
+		</div>
+	</div>
+</div>

@@ -13,20 +13,20 @@ gulp.task('default', function() {
 
 });
 
-gulp.task('manage', ['vendor', 'controller', 'service', 'partials'], function() {
+gulp.task('build', ['vendor', 'controller', 'service', 'partials'], function() {
 	gulp.src('build/*')
 		// .pipe(concat('manage.min.js'))
 		.pipe(gulp.dest(dest + 'js/'));
 });
 
 gulp.task('twig', function() {
-	return merge([
+	merge([
 		gulp.src('manage.html.twig')
 			.pipe(rename('index.html.twig'))
 			.pipe(gulp.dest('../app/Resources/views/manage')),
-		gulp.src('mumshoppe.html.twig')
+		gulp.src('shop.html.twig')
 			.pipe(rename('index.html.twig'))
-			.pipe(gulp.dest('../app/Resources/views/mumshoppe'))
+			.pipe(gulp.dest('../app/Resources/views/shop'))
 		]);
 });
 
@@ -43,10 +43,16 @@ gulp.task('vendor', function() {
 });
 
 gulp.task('controller', function() {
-	gulp.src(['manage.js', 'controllers/*.js', 'controllers/manage/**/*.js'])
-		.pipe(concat('controllers.min.js'))
-		// .pipe(uglify())
-		.pipe(gulp.dest('build/'));
+	merge([
+		gulp.src(['manage.js', 'controllers/*.js', 'controllers/manage/**/*.js'])
+			.pipe(concat('manage-controllers.min.js'))
+			// .pipe(uglify())
+			.pipe(gulp.dest('build/')),
+		gulp.src(['shop.js', 'controllers/*.js', 'controllers/shop/**/*.js'])
+			.pipe(concat('shop-controllers.min.js'))
+			// .pipe(uglify())
+			.pipe(gulp.dest('build/'))
+	]);
 });
 
 gulp.task('service', function() {
@@ -57,16 +63,30 @@ gulp.task('service', function() {
 });
 
 gulp.task('partials', function() {
-	gulp.src("./partials/manage/**/*.html")
-		.pipe(minifyHtml({
-			empty: true,
-			spare: true,
-			quotes: true
-		}))
-		.pipe(ngHtml2Js({
-			moduleName: 'manage.partials'
-		}))
-		.pipe(concat('partials.min.js'))
-		// .pipe(uglify())
-		.pipe(gulp.dest('build/'));
+	merge([
+		gulp.src('./partials/manage/**/*.html')
+			.pipe(minifyHtml({
+				empty: true,
+				spare: true,
+				quotes: true
+			}))
+			.pipe(ngHtml2Js({
+				moduleName: 'manage.partials'
+			}))
+			.pipe(concat('manage-partials.min.js'))
+			// .pipe(uglify())
+			.pipe(gulp.dest('build/')),
+		gulp.src('./partials/shop/**/*.html')
+			.pipe(minifyHtml({
+				empty: true,
+				spare: true,
+				quotes: true
+			}))
+			.pipe(ngHtml2Js({
+				moduleName: 'shop.partials'
+			}))
+			.pipe(concat('shop-partials.min.js'))
+			// .pipe(uglify())
+			.pipe(gulp.dest('build/'))
+	]);
 })
