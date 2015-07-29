@@ -53,3 +53,7 @@ category:
 customer:
     resource: "@AppBundle/Controller/CustomerController.php"
     type: annotation
+
+mum:
+    resource: "@AppBundle/Controller/MumController.php"
+    type: annotation

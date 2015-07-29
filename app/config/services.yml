@@ -74,3 +74,9 @@ services:
         parent: entity_manager
         calls:
             - [setRepo, ["Image"]]
+
+    mum_manager:
+        class: AppBundle\Service\MumService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Mum"]]

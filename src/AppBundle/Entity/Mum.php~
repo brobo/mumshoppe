@@ -1,0 +1,59 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="mums")
+ */
+class Mum {
+
+	/**
+	 * @ORM\Column(type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue
+	 */
+	protected $id;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="Accessory")
+	 * @ORM\JoinTable(name="mum_accessories",
+	 * 		joinColumns={@ORM\JoinColumn(name="mum_id", referencedColumnName="id")},
+	 * 		inverseJoinColumns={@ORM\JoinColumn(name="accessory_id", referencedColumnName="id")}
+	 *  )
+	 */
+	protected $accessories;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="AccentBow")
+	 * @ORM\JoinColumn(name="accentbow_id", referencedColumnName="id")
+	 */
+	protected $accentBow;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Backing")
+	 * @ORM\JoinColumn(name="backing_id", referencedColumnName="id")
+	 */
+	protected $backing;
+
+	/**
+	 * @ORM\ManyToMany(targetEntity="Bear")
+	 * @ORM\JoinTable(name="mum_bears",
+	 * 		joinColumns={@ORM\JoinColumn(name="mum_id", referencedColumnName="id")},
+	 * 		inverseJoinColumns={@ORM\JoinColumn(name="bear_id", referencedColumnName="id")}
+	 * 	)
+	 */
+	protected $bears;
+
+	/**
+	 * @ORM\OneToMany(targetEntity="Ribbon", mappedBy="mum")
+	 */
+	protected $ribbons;
+
+	public function __construct() {
+		$accessories = new ArrayCollection();
+		$bears = new ArrayCollection();
+	}
+
+}

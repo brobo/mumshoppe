@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="ribbons")
 */
-class Ribbon extends VisualEntity {
+class Ribbon {
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -92,4 +92,33 @@ class Ribbon extends VisualEntity {
     {
         return $this->letter;
     }
+    /**
+     * @var \AppBundle\Entity\Image
+     */
+    private $image;
+
+
+    /**
+     * Set mum
+     *
+     * @param \AppBundle\Entity\Mum $mum
+     * @return Ribbon
+     */
+    public function setMum(\AppBundle\Entity\Mum $mum = null)
+    {
+        $this->mum = $mum;
+
+        return $this;
+    }
+
+    /**
+     * Get mum
+     *
+     * @return \AppBundle\Entity\Mum 
+     */
+    public function getMum()
+    {
+        return $this->mum;
+    }
+
 }
