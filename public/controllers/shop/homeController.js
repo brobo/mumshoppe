@@ -1,67 +1,3 @@
-var app = angular.module('mumshoppe-shop', [
-	'ui.router',
-	'ui.bootstrap',
-	'ajoslin.promise-tracker',
-	'shop.partials',
-	'controller.alerts',
-	'controller.really',
-	'shop.controller.home',
-	'service.alert',
-	'service.backing',
-	'service.really',
-	'service.group',
-	'service.mum',
-	'service.product'
-	]);
-
-app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-
-	$stateProvider
-		.state('index', {
-			url: ''
-		})
-		.state('base', {
-			templateUrl: 'base.html'
-		})
-		.state('base.home', {
-			url: '/home',
-			templateUrl: 'home.html',
-			controller: 'HomeController'
-		});
-
-		$httpProvider.defaults.post = {'Content-Type': 'application/x-www-form-urlencoded'};
-		$httpProvider.defaults.put = {'Content-Type': 'application/x-www-form-urlencoded'};
-
-});
-
-
-angular.module('controller.alerts', [])
-	.controller('AlertsController', ['$scope', 'AlertService', function($scope, AlertService) {
-		$scope.closeAlert = AlertService.closeAlert;
-	}]);
-angular.module('controller.really', [])
-	.controller('ReallyController', [
-	'$scope',
-	'$modalInstance',
-	'promiseTracker',
-	'data',
-	'callback',
-	function($scope, $modalInstance, promiseTracker, data, callback) {
-
-		$scope.data = data;
-		$scope.cancel = $modalInstance.dismiss;
-		$scope.tracker = promiseTracker();
-
-		$scope.confirm = function() {
-			var promise = callback();
-			if (promise.then) {
-				var deferred = $scope.tracker.createPromise();
-				promise.then($modalInstance.close, $modalInstance.dismiss).finally(deferred.resolve);
-			} else {
-				$modalInstance.close();
-			}
-		}
-	}]);
 angular.module('shop.controller.home', [])
 	.controller('HomeController', [
 	'$scope',
@@ -81,7 +17,6 @@ angular.module('shop.controller.home', [])
 		BackingService.findAll().success(function(data) {
 			$scope.backings = data;
 			for (var i = 0; i < $scope.backings.length; i++) {
-				console.log($scope.backings[i]);
 				$scope.backings[i].imageUrl = BackingService.imageUrl($scope.backings[i].id);
 			}
 

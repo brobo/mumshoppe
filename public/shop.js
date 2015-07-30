@@ -5,8 +5,13 @@ var app = angular.module('mumshoppe-shop', [
 	'shop.partials',
 	'controller.alerts',
 	'controller.really',
+	'shop.controller.home',
 	'service.alert',
-	'service.really'
+	'service.backing',
+	'service.really',
+	'service.group',
+	'service.mum',
+	'service.product'
 	]);
 
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -21,7 +26,7 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		.state('base.home', {
 			url: '/home',
 			templateUrl: 'home.html',
-			controller: 'homeController'
+			controller: 'HomeController'
 		});
 
 		$httpProvider.defaults.post = {'Content-Type': 'application/x-www-form-urlencoded'};

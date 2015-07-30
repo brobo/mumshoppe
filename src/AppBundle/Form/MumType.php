@@ -29,7 +29,7 @@ class MumType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Mum',
-            'csrf_protection' => 'false'
+            'csrf_protection' => false
         ));
     }
 

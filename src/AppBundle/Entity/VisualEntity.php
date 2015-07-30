@@ -3,11 +3,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use JMS\Serializer\Annotation\Exclude;
+
 abstract class VisualEntity {
 
 	/**
 	 * @ORM\OneToOne(targetEntity="Image")
 	 * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * @Exclude
 	 */
 	protected $image;
 

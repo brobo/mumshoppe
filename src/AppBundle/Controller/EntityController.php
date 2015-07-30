@@ -56,7 +56,8 @@ abstract class EntityController extends RestController {
 	 * @Method({"POST"})
 	 */
 	public function postAction(Request $request) {
-		$form = $this->getForm();
+		$entity = $this->entityClass->newInstance();
+		$form = $this->getForm($entity);
 
 		$form->submit($request->request->all());
 

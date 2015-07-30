@@ -6,17 +6,19 @@ use ReflectionClass;
 use AppBundle\Entity\Mum;
 use AppBundle\Form\MumType;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+
 /**
- * @Route("/mum")
+ * @Route("/api/mum")
  */
-class MumController extends RestController {
+class MumController extends EntityController {
 
 	public function getMumManager() {
 		return $this->get('mum_manager');
 	}
 
 	protected function getEntityManager() {
-		return getMumManager();
+		return $this->getMumManager();
 	}
 
 	public function __construct() {
