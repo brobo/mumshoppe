@@ -1,4 +1,4 @@
-angular.module('service.really', ['ui.bootstrap'])
+angular.module('service.really', [])
 	.factory('ReallyService', ['$modal', function($modal) {
 		var defaults = {
 			head: 'Really?',
@@ -13,7 +13,7 @@ angular.module('service.really', ['ui.bootstrap'])
 				}
 
 				return modalInstance = $modal.open({
-					templateUrl: 'res/really.html',
+					templateUrl: 'really.html',
 					controller: 'ReallyController',
 					resolve: {
 						data: function() { return data; },

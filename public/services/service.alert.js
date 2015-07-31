@@ -3,15 +3,16 @@ angular.module('service.alert', [])
 		$rootScope.alerts = [];
 		var alertsService = {
 			add: function(type, message) {
-				return $rootScope.alerts.splice(0, 0, {
+				$rootScope.alerts.splice(0, 0, {
 					type: type,
 					message: message,
 					close: function() {
-						return alertsService.closeAlert(this);
+						return alertsService.close(this);
 					}
 				});
+				return $rootScope.alerts[0];
 			},
-			closeAlert: function(alert) {
+			close: function(alert) {
 				var index = $rootScope.alerts.indexOf(alert);
 				return $rootScope.alerts.splice(index, 1);
 			},

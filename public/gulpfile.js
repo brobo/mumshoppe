@@ -5,13 +5,10 @@ var ngHtml2Js = require("gulp-ng-html2js");
 var uglify = require("gulp-uglify");
 var merge = require('merge-stream');
 var rename = require('gulp-rename');
+var mocha = require('gulp-mocha');
 
 
 var dest = "../web/"
-
-gulp.task('default', function() {
-
-});
 
 gulp.task('build', ['vendor', 'controller', 'service', 'partials'], function() {
 	gulp.src('build/*')
@@ -86,6 +83,18 @@ gulp.task('partials', function() {
 				moduleName: 'shop.partials'
 			}))
 			.pipe(concat('shop-partials.min.js'))
+			// .pipe(uglify())
+			.pipe(gulp.dest('build/')),
+		gulp.src('./partials/shared/**/*.html')
+			.pipe(minifyHtml({
+				empty: true,
+				spare: true,
+				quotes: true
+			}))
+			.pipe(ngHtml2Js({
+				moduleName: 'shared.partials'
+			}))
+			.pipe(concat('shared-partials.min.js'))
 			// .pipe(uglify())
 			.pipe(gulp.dest('build/'))
 	]);

@@ -1,4 +1,4 @@
-angular.module('manage.service.imageEdit', [])
+angular.module('manage.service.image-edit', [])
 	.factory('ImageEditService', [
 	'$http', 
 	'$modal',
@@ -9,7 +9,7 @@ angular.module('manage.service.imageEdit', [])
 				return $modal.open({
 					size: 'small',
 					controller: 'imageEditController',
-					templateUrl: 'res/imageEdit.html',
+					templateUrl: 'res/image-edit.html',
 					resolve: {
 						imageUrl: function() { return imageUrl; },
 						uploadAction: function() { return uploadAction; }

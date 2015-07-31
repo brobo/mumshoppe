@@ -2,6 +2,7 @@ var app = angular.module('mumshoppe-shop', [
 	'ui.router',
 	'ui.bootstrap',
 	'ajoslin.promise-tracker',
+	'shared.partials',
 	'shop.partials',
 	'controller.alerts',
 	'controller.really',

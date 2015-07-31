@@ -1,4 +1,4 @@
-angular.module('manage.controller.imageEdit', [])
+angular.module('manage.controller.image-edit', [])
 	.controller('imageEditController', [
 	'$scope',
 	'$modalInstance',

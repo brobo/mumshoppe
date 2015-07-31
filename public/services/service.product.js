@@ -9,7 +9,6 @@ angular.module('service.product', [])
 				return $http.post('api/product/', product);
 			},
 			update: function(id, product) {
-				console.log(product);
 				return $http.put('api/product/' + id, product);
 			},
 			delete: function(id) {
