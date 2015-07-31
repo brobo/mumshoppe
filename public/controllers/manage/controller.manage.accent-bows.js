@@ -1,5 +1,5 @@
-angular.module('manage.controller.accentbows', [])
-	.controller('AccentbowsController', [
+angular.module('manage.controller.accent-bows', [])
+	.controller('AccentBowsController', [
 	'$scope',
 	'$modal',
 	'$q',

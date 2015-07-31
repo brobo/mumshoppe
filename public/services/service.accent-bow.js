@@ -1,4 +1,4 @@
-angular.module('service.accentbow', [])
+angular.module('service.accent-bow', [])
 	.factory('AccentBowService', ['$http', function($http) {
 		return {
 

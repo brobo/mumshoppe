@@ -1,6 +1,6 @@
-describe('The accentbow service', function() {
+describe('The accent bow service', function() {
 
-	beforeEach(module('service.accentbow'));
+	beforeEach(module('service.accent-bow'));
 
 	var $httpBackend;
 	var AccentBowService;
