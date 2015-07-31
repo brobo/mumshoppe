@@ -1,5 +1,5 @@
 angular.module('manage.controller.bears', [])
-	.controller('bearsController', [
+	.controller('BearsController', [
 	'$scope',
 	'$modal',
 	'AlertService',
@@ -41,7 +41,7 @@ angular.module('manage.controller.bears', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editBear.html',
-				controller: 'bears.editBearController',
+				controller: 'bears.EditBearController',
 				resolve: {
 					callback: function() { return BearService.create; },
 					groups: function() { return $scope.groups; },
@@ -56,7 +56,7 @@ angular.module('manage.controller.bears', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editBear.html',
-				controller: 'bears.editBearController',
+				controller: 'bears.EditBearController',
 				resolve: {
 					callback: function() { return BearService.update.bind(null, bear.id); },
 					groups: function() { return $scope.groups; },
@@ -84,7 +84,7 @@ angular.module('manage.controller.bears', [])
 		};
 
 	}])
-	.controller('bears.editBearController', [
+	.controller('bears.EditBearController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',

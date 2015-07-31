@@ -44,31 +44,31 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		})
 		.state('base.options.groups', {
 			templateUrl: 'options/groups.html',
-			controller: 'groupsController'
+			controller: 'GroupsController'
 		})
 		.state('base.options.products', {
 			templateUrl: 'options/products.html',
-			controller: 'productsController'
+			controller: 'ProductsController'
 		})
 		.state('base.options.backings', {
 			templateUrl: 'options/backings.html',
-			controller: 'backingsController'
+			controller: 'BackingsController'
 		})
 		.state('base.options.accentbows', {
 			templateUrl: 'options/accentbows.html',
-			controller: 'accentbowsController'
+			controller: 'AccentbowsController'
 		})
 		.state('base.options.letters', {
 			templateUrl: 'options/letters.html',
-			controller: 'lettersController'
+			controller: 'LettersController'
 		})
 		.state('base.options.bears', {
 			templateUrl: 'options/bears.html',
-			controller: 'bearsController'
+			controller: 'BearsController'
 		})
 		.state('base.options.accessories', {
 			templateUrl: 'options/accessories.html',
-			controller: 'accessoriesController'
+			controller: 'AccessoriesController'
 		});
 
 		$httpProvider.defaults.post = {'Content-Type': 'application/x-www-form-urlencoded'};

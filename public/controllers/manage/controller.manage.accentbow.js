@@ -1,5 +1,5 @@
 angular.module('manage.controller.accentbows', [])
-	.controller('accentbowsController', [
+	.controller('AccentbowsController', [
 	'$scope',
 	'$modal',
 	'$q',
@@ -32,7 +32,7 @@ angular.module('manage.controller.accentbows', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editAccentBow.html',
-				controller: 'accentbows.editAccentBowController',
+				controller: 'accentbows.EditAccentBowController',
 				resolve: {
 					callback: function() { return AccentBowService.create; },
 					groups: function() { return $scope.groups; },
@@ -50,7 +50,7 @@ angular.module('manage.controller.accentbows', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editAccentBow.html',
-				controller: 'accentbows.editAccentBowController',
+				controller: 'accentbows.EditAccentBowController',
 				resolve: {
 					callback: function() { return AccentBowService.update.bind(null, bow.id); },
 					groups: function() { return $scope.groups; },
@@ -74,7 +74,7 @@ angular.module('manage.controller.accentbows', [])
 		};
 
 	}])
-	.controller('accentbows.editAccentBowController', [
+	.controller('accentbows.EditAccentBowController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',

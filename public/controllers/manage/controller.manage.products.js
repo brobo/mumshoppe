@@ -1,5 +1,5 @@
 angular.module('manage.controller.products', [])
-	.controller('productsController', [
+	.controller('ProductsController', [
 	'$scope',
 	'$modal',
 	'AlertService',
@@ -20,7 +20,7 @@ angular.module('manage.controller.products', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editProduct.html',
-				controller: 'products.editProductController',
+				controller: 'products.EditProductController',
 				resolve: {
 					callback: function() { return ProductService.create; },
 					product: function() { return {}; }
@@ -36,7 +36,7 @@ angular.module('manage.controller.products', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editProduct.html',
-				controller: 'products.editProductController',
+				controller: 'products.EditProductController',
 				resolve: {
 					callback: function() { return ProductService.update.bind(null, product.id); },
 					product: function() { return angular.copy(product); }
@@ -58,7 +58,7 @@ angular.module('manage.controller.products', [])
 		};
 
 	}])
-	.controller('products.editProductController', [
+	.controller('products.EditProductController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',

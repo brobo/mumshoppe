@@ -30,7 +30,7 @@ describe('The image edit service', function() {
 		var args = $modal.open.firstCall.args;
 
 		expect(args).to.have.deep.property('[0].templateUrl', 'res/image-edit.html');
-		expect(args).to.have.deep.property('[0].controller', 'imageEditController');
+		expect(args).to.have.deep.property('[0].controller', 'ImageEditController');
 	});
 
 	it('should use a template that exists', function() {

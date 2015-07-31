@@ -1,5 +1,5 @@
 angular.module('manage.controller.backings', [])
-	.controller('backingsController', [
+	.controller('BackingsController', [
 	'$scope',
 	'$modal',
 	'$q',
@@ -38,7 +38,7 @@ angular.module('manage.controller.backings', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editBacking.html',
-				controller: 'backings.editBackingController',
+				controller: 'backings.EditBackingController',
 				resolve: {
 					callback: function() { return BackingService.create; },
 					groups: function() { return groups; },
@@ -57,7 +57,7 @@ angular.module('manage.controller.backings', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editBacking.html',
-				controller: 'backings.editBackingController',
+				controller: 'backings.EditBackingController',
 				resolve: {
 					callback: function() { return BackingService.update.bind(null, backing.id); },
 					groups: function() { return groups; },
@@ -83,7 +83,7 @@ angular.module('manage.controller.backings', [])
 		}
 
 	}])
-	.controller('backings.editBackingController', [
+	.controller('backings.EditBackingController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',

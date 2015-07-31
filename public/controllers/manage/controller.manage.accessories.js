@@ -1,5 +1,5 @@
 angular.module('manage.controller.accessories', [])
-	.controller('accessoriesController', [
+	.controller('AccessoriesController', [
 	'$scope',
 	'$modal',
 	'promiseTracker',
@@ -59,7 +59,7 @@ angular.module('manage.controller.accessories', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editCategories.html',
-				controller: 'accessories.categoriesController',
+				controller: 'accessories.CategoriesController',
 				resolve: {
 					parentScope: function() { return $scope; }
 				}
@@ -73,7 +73,7 @@ angular.module('manage.controller.accessories', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editAccessory.html',
-				controller: 'accessories.editAccessoryController',
+				controller: 'accessories.EditAccessoryController',
 				resolve: {
 					callback: function() { return AccessoryService.create; },
 					groups: function() { return $scope.groups; },
@@ -94,7 +94,7 @@ angular.module('manage.controller.accessories', [])
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editAccessory.html',
-				controller: 'accessories.editAccessoryController',
+				controller: 'accessories.EditAccessoryController',
 				resolve: {
 					callback: function() { return AccessoryService.update.bind(null, accessory.id); },
 					groups: function() { return $scope.groups; },
@@ -125,7 +125,7 @@ angular.module('manage.controller.accessories', [])
 		};
 
 	}])
-	.controller('accessories.categoriesController', [
+	.controller('accessories.CategoriesController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',
@@ -161,7 +161,7 @@ angular.module('manage.controller.accessories', [])
 		}
 
 	}])
-	.controller('accessories.editAccessoryController', [
+	.controller('accessories.EditAccessoryController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',

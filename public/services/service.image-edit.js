@@ -8,7 +8,7 @@ angular.module('manage.service.image-edit', [])
 			open: function(imageUrl, uploadAction) {
 				return $modal.open({
 					size: 'small',
-					controller: 'imageEditController',
+					controller: 'ImageEditController',
 					templateUrl: 'res/image-edit.html',
 					resolve: {
 						imageUrl: function() { return imageUrl; },

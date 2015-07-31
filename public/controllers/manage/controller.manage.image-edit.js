@@ -1,5 +1,5 @@
 angular.module('manage.controller.image-edit', [])
-	.controller('imageEditController', [
+	.controller('ImageEditController', [
 	'$scope',
 	'$modalInstance',
 	'AlertService',

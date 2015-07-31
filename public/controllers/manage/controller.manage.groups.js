@@ -1,5 +1,5 @@
 angular.module('manage.controller.groups', [])
-	.controller('groupsController', [
+	.controller('GroupsController', [
 	'$scope',
 	'$modal',
 	'AlertService',
@@ -20,7 +20,7 @@ angular.module('manage.controller.groups', [])
   			var modal = $modal.open({
   				size: 'small',
   				templateUrl: 'editGroup.html',
-  				controller: 'groups.editGroupController',
+  				controller: 'groups.EditGroupController',
   				resolve: {
   					callback: function() { return GroupService.create; },
   					group: function() { return {}; }
@@ -36,7 +36,7 @@ angular.module('manage.controller.groups', [])
   			var modal = $modal.open({
   				size: 'small',
   				templateUrl: 'editGroup.html',
-  				controller: 'groups.editGroupController',
+  				controller: 'groups.EditGroupController',
   				resolve: {
   					callback: function() { return GroupService.update.bind(null, group.id); },
   					group: function() { return angular.copy(group); }
@@ -58,7 +58,7 @@ angular.module('manage.controller.groups', [])
   		};
 
 	}])
-	.controller('groups.editGroupController', [
+	.controller('groups.EditGroupController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',

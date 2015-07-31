@@ -26,7 +26,7 @@ angular.module('shop.controller.home', [])
 			return $modal.open({
 				size: 'large',
 				templateUrl: 'createMum.html',
-				controller: 'home.createController',
+				controller: 'home.CreateController',
 				resolve: {
 					groups: function() { return $scope.groups; },
 					products: function() { return $scope.products; },
@@ -36,7 +36,7 @@ angular.module('shop.controller.home', [])
 		};
 
 	}])
-	.controller('home.createController', [
+	.controller('home.CreateController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',

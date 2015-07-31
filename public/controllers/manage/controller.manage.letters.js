@@ -1,5 +1,5 @@
 angular.module('manage.controller.letters', [])
-	.controller('lettersController', [
+	.controller('LettersController', [
 	'$scope',
 	'$modal',
 	'AlertService',
@@ -20,7 +20,7 @@ angular.module('manage.controller.letters', [])
   			var modal = $modal.open({
   				size: 'small',
   				templateUrl: 'editLetter.html',
-  				controller: 'letters.editLetterController',
+  				controller: 'letters.EditLetterController',
   				resolve: {
   					callback: function() { return LetterService.create; },
   					letter: function() { return {}; }
@@ -36,7 +36,7 @@ angular.module('manage.controller.letters', [])
   			var modal = $modal.open({
   				size: 'small',
   				templateUrl: 'editLetter.html',
-  				controller: 'letters.editLetterController',
+  				controller: 'letters.EditLetterController',
   				resolve: {
   					callback: function() { return LetterService.update.bind(null, letter.id); },
   					letter: function() { return angular.copy(letter); }
@@ -58,7 +58,7 @@ angular.module('manage.controller.letters', [])
   		}
 
 	}])
-	.controller('letters.editLetterController', [
+	.controller('letters.EditLetterController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',
