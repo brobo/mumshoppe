@@ -7,16 +7,18 @@ angular.module('manage.controller.products', [])
 	'ProductService',
 	function($scope, $modal, AlertService, ReallyService, ProductService) {
 
+		$scope.products = [];
+
 		function updateProducts() {
-			ProductService.findAll().success(function(data) {
+			ProductService.findAll().then(function(data) {
 				$scope.products = data;
-			}).error(function(data) {
+			}, function(data) {
 				AlertService.add('danger', 'Unable to load products.');
 			});
 		}
 		updateProducts();
 
-		$scope.openAddModal = function() {
+		$scope.addProduct = function() {
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editProduct.html',
@@ -32,7 +34,7 @@ angular.module('manage.controller.products', [])
 			return modal;
 		};
 
-		$scope.openEditModal = function(product) {
+		$scope.editProduct = function(product) {
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editProduct.html',
@@ -48,7 +50,7 @@ angular.module('manage.controller.products', [])
 			return modal;
 		};
 
-		$scope.delete = function(product) {
+		$scope.deleteProduct = function(product) {
 			ReallyService.prompt({
 				body: 'Are you sure you want to delete the product "' + product.name + '"?'
 			}, ProductService.delete.bind(null, product.id)).result.then(function() {
@@ -73,14 +75,14 @@ angular.module('manage.controller.products', [])
 		$scope.cancel = $modalInstance.dismiss;
 
 		$scope.save = function() {
-			var promise = callback($scope.product).success(function() {
+			var deferred = $scope.tracker.createPromise();
+			var promise = callback($scope.product).then(function() {
 				AlertService.add('success', 'Successfully saved product!');
 				$modalInstance.close();
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'An error occured while saving the product.');
 				$modalInstance.dismiss();
-			});
-			$scope.tracker.addPromise(promise);
+			}).finally(deferred.resolve);
 		}
 
 	}]);

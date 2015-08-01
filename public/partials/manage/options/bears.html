@@ -1,4 +1,4 @@
-<button class="btn btn-success" ng-click="openAddModal()">Add Bear</button>
+<button class="btn btn-success" ng-click="addBear()">Add Bear</button>
 <div class="table-responsive">
 	<table class="table table-striped table-hover">
 		<thead>
@@ -15,7 +15,7 @@
 				<td>{{ bear.price | currency }}</td>
 				<td ng-repeat="group in groups"><i class="fa fa-check" ng-show="hasGroup(bear, group)"></i></td>
 				<td>
-					<button class="btn btn-xs btn-warning" ng-click="openEditModal(bear)"><i class="fa fa-trash"></i> Edit</button>
+					<button class="btn btn-xs btn-warning" ng-click="editBear(bear)"><i class="fa fa-trash"></i> Edit</button>
 					<button class="btn btn-xs btn-info" ng-click="openImageModal(bear)"><i class="fa fa-image"></i> Image</button>
 					<button class="btn btn-xs btn-danger" ng-click="deleteBear(bear)"><i class="fa fa-trash"></i> Delete</button>
 				</td>

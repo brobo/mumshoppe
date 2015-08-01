@@ -2,6 +2,7 @@ angular.module('manage.controller.accessories', [])
 	.controller('AccessoriesController', [
 	'$scope',
 	'$modal',
+	'$q',
 	'promiseTracker',
 	'AlertService',
 	'ImageEditService',
@@ -9,38 +10,41 @@ angular.module('manage.controller.accessories', [])
 	'CategoryService',
 	'GroupService',
 	'AccessoryService',
-	function($scope, $modal, promiseTracker, AlertService, ImageEditService, ReallyService, CategoryService, GroupService, AccessoryService) {
+	function($scope, $modal, $q, promiseTracker, AlertService, ImageEditService, ReallyService, CategoryService, GroupService, AccessoryService) {
+
+		$scope.categories = [];
+		$scope.groups = [];
+		$scope.accessories = [];
 
 		$scope.updateCategories = function() {
-			CategoryService.findAll().success(function(data) {
+			CategoryService.findAll().then(function(data) {
 				$scope.categories = data;
 				for (var i = 0; i < $scope.categories.length; i++) {
 					$scope.categories[i].tracker = promiseTracker();
 				}
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'Unable to load categories.');
 			});
 		}
 		$scope.updateCategories();
 
-		$scope.openImageModal = function(accessory) {
-			ImageEditService.open(AccessoryService.imageUrl(accessory.id), AccessoryService.uploadImage.bind(null, accessory.id));
-		}
-
 		function updateAccessories() {
-			AccessoryService.findAll().success(function(data) {
-				$scope.accessories = data;
-			}).error(function() {
+			$q.all([
+				AccessoryService.findAll().then(function(data) {
+					$scope.accessories = data;
+				}),
+				GroupService.findAll().then(function(data) {
+					$scope.groups = data;
+				})
+			]).catch(function() {
 				AlertService.add('danger', 'Unable to load accessories.');
 			});
 		}
 		updateAccessories();
 
-		GroupService.findAll().success(function(data) {
-			$scope.groups = data;
-		}).error(function() {
-			AlertService.add('danger', 'Unable to load groups.');
-		});
+		$scope.openImageModal = function(accessory) {
+			ImageEditService.open(AccessoryService.imageUrl(accessory.id), AccessoryService.uploadImage.bind(null, accessory.id));
+		}
 
 		$scope.filterAccessories = function(accessory) {
 			return !$scope.selectedCategory || accessory.category.id == $scope.selectedCategory;
@@ -143,10 +147,10 @@ angular.module('manage.controller.accessories', [])
 			var deferred = $scope.addTracker.createPromise();
 			CategoryService.create({
 				name: $scope.categoryName
-			}).success(function() {
+			}).then(function() {
 				parentScope.updateCategories();
 				$scope.categoryName = "";
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'Unable to save category');
 				$modalInstance.dismiss();
 			}).finally(deferred.resolve);
@@ -154,7 +158,7 @@ angular.module('manage.controller.accessories', [])
 
 		$scope.deleteCategory = function(category) {
 			var deferred = category.tracker.createPromise();
-			CategoryService.delete(category.id).success(parentScope.updateCategories).error(function() {
+			CategoryService.delete(category.id).then(parentScope.updateCategories, function() {
 				AlertService.add('danger', 'Unable to delete category.');
 				$modalInstance.dismiss();
 			}).finally(deferred.resolve);
@@ -190,10 +194,10 @@ angular.module('manage.controller.accessories', [])
 				}
 			});
 
-			callback(accessory).success(function() {
+			callback(accessory).then(function() {
 				AlertService.add('success', 'Successfully saved accessory.');
 				$modalInstance.close();
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'Unable to save accessory.');
 				$modalInstance.close();
 			}).finally(deferred.resolve);

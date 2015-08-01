@@ -30,10 +30,10 @@ angular.module('manage.controller.image-edit', [])
 			var file = new Blob([arr], {type: mime});
 
 			var deferred = $scope.tracker.createPromise();
-			uploadAction(file).success(function() {
+			uploadAction(file).then(function() {
 				AlertService.add('success', 'Successfully uploaded image.');
 				$modalInstance.close();
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'An error occured while uploading the image.');
 				$modalInstance.dismiss();
 			}).finally(deferred.resolve);

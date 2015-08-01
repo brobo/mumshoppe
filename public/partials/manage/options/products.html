@@ -1,4 +1,4 @@
-<button class="btn btn-success" ng-click="openAddModal()">Add Product</button>
+<button class="btn btn-success" ng-click="addProduct()">Add Product</button>
 <div class="table-responsive">
 	<table class="table table-striped table-hover">
 		<thead>
@@ -13,8 +13,8 @@
 				<td>{{ product.name }}</td>
 				<td>{{ product.bearLimit }}</td>
 				<td>
-					<button class="btn btn-warning btn-xs" ng-click="openEditModal(product)"><i class="fa fa-pencil"></i>  Edit</button>
-					<button class="btn btn-danger btn-xs" ng-click="delete(product)"><i class="fa fa-trash"></i>  Delete</button>
+					<button class="btn btn-warning btn-xs" ng-click="editProduct(product)"><i class="fa fa-pencil"></i>  Edit</button>
+					<button class="btn btn-danger btn-xs" ng-click="deleteProduct(product)"><i class="fa fa-trash"></i>  Delete</button>
 				</td>
 			</tr>
 			<tr ng-show="!products.length">

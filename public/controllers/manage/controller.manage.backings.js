@@ -11,12 +11,15 @@ angular.module('manage.controller.backings', [])
 	'BackingService',
 	function($scope, $modal, $q, AlertService, ImageEditService, ReallyService, ProductService, GroupService, BackingService) {
 
+		$scope.products = [];
+		$scope.backings = [];
+
 		function updateBackings() {
 			$q.all([
-				ProductService.findAll().success(function(data) {
+				ProductService.findAll().then(function(data) {
 					$scope.products = data;
 				}),
-				BackingService.findAll().success(function(data) {
+				BackingService.findAll().then(function(data) {
 					$scope.backings = data;
 				})
 			]).catch(function(data) {
@@ -30,7 +33,7 @@ angular.module('manage.controller.backings', [])
 		}
 
 		var groups;
-		GroupService.findAll().success(function(data) {
+		GroupService.findAll().then(function(data) {
 			groups = data;
 		});
 
@@ -104,10 +107,10 @@ angular.module('manage.controller.backings', [])
 
 		$scope.save = function() {
 			var deferred = $scope.tracker.createPromise();
-			var promise = callback($scope.backing).success(function() {
+			var promise = callback($scope.backing).then(function() {
 				AlertService.add('success', 'Successfully saved backing!');
 				$modalInstance.close();
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'Unable to saving backing.');
 				$modalInstance.dismiss();
 			}).finally(deferred.resolve);

@@ -2,27 +2,30 @@ angular.module('manage.controller.bears', [])
 	.controller('BearsController', [
 	'$scope',
 	'$modal',
+	'$q',
 	'AlertService',
 	'ImageEditService',
 	'ReallyService',
 	'BearService',
 	'GroupService',
-	function($scope, $modal, AlertService, ImageEditService, ReallyService, BearService, GroupService) {
+	function($scope, $modal, $q, AlertService, ImageEditService, ReallyService, BearService, GroupService) {
+
+		$scope.bears = [];
+		$scope.groups = [];
 
 		function updateBears() {
-			BearService.findAll().success(function(data) {
-				$scope.bears = data;
-			}).error(function() {
+			$q.all([
+				BearService.findAll().then(function(data) {
+					$scope.bears = data;
+				}),
+				GroupService.findAll().then(function(data) {
+					$scope.groups = data;
+				})
+			]).catch(function() {
 				AlertService.add('danger', 'Unable to load bears.');
 			});
 		}
 		updateBears();
-
-		GroupService.findAll().success(function(data) {
-			$scope.groups = data;
-		}).error(function() {
-			AlertService.add('danger', 'Unable to load groups.');
-		});
 
 		$scope.hasGroup = function(bear, group) {
 			for (var i = 0; i < bear.groups.length; i++) {
@@ -37,7 +40,7 @@ angular.module('manage.controller.bears', [])
 			ImageEditService.open(BearService.imageUrl(bear.id), BearService.uploadImage.bind(null, bear.id));
 		}
 
-		$scope.openAddModal = function() {
+		$scope.addBear = function() {
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editBear.html',
@@ -52,7 +55,7 @@ angular.module('manage.controller.bears', [])
 			return modal;
 		};
 
-		$scope.openEditModal = function(bear) {
+		$scope.editBear = function(bear) {
 			var modal = $modal.open({
 				size: 'small',
 				templateUrl: 'editBear.html',

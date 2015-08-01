@@ -10,12 +10,15 @@ angular.module('manage.controller.accent-bows', [])
 	'AccentBowService',
 	function($scope, $modal, $q, AlertService, ImageEditService, ReallyService, GroupService, AccentBowService) {
 
+		$scope.groups = [];
+		$scope.bows = [];
+
 		function updateBows() {
 			$q.all([
-				GroupService.findAll().success(function(data) {
+				GroupService.findAll().then(function(data) {
 					$scope.groups = data;
 				}),
-				AccentBowService.findAll().success(function(data) {
+				AccentBowService.findAll().then(function(data) {
 					$scope.bows = data;
 				})
 			]).catch(function(data) {
@@ -31,8 +34,8 @@ angular.module('manage.controller.accent-bows', [])
 		$scope.addBow = function(group) {
 			var modal = $modal.open({
 				size: 'small',
-				templateUrl: 'editAccentBow.html',
-				controller: 'accentbows.EditAccentBowController',
+				templateUrl: 'edit-accent-bow.html',
+				controller: 'accent-bows.EditAccentBowController',
 				resolve: {
 					callback: function() { return AccentBowService.create; },
 					groups: function() { return $scope.groups; },
@@ -49,8 +52,8 @@ angular.module('manage.controller.accent-bows', [])
 		$scope.editBow = function(bow) {
 			var modal = $modal.open({
 				size: 'small',
-				templateUrl: 'editAccentBow.html',
-				controller: 'accentbows.EditAccentBowController',
+				templateUrl: 'edit-accent-bow.html',
+				controller: 'accent-bows.EditAccentBowController',
 				resolve: {
 					callback: function() { return AccentBowService.update.bind(null, bow.id); },
 					groups: function() { return $scope.groups; },
@@ -74,7 +77,7 @@ angular.module('manage.controller.accent-bows', [])
 		};
 
 	}])
-	.controller('accentbows.EditAccentBowController', [
+	.controller('accent-bows.EditAccentBowController', [
 	'$scope',
 	'$modalInstance',
 	'promiseTracker',
@@ -92,10 +95,10 @@ angular.module('manage.controller.accent-bows', [])
 
 		$scope.save = function() {
 			var deferred = $scope.tracker.createPromise();
-			var promise = callback($scope.bow).success(function() {
+			var promise = callback($scope.bow).then(function() {
 				AlertService.add('success', 'Successfully saved accent bow!');
 				$modalInstance.close();
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'Unable to save accent bow.');
 				$modalInstance.dismiss();
 			}).finally(deferred.resolve);

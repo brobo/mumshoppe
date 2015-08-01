@@ -7,16 +7,18 @@ angular.module('manage.controller.groups', [])
 	'GroupService',
 	function($scope, $modal, AlertService, ReallyService, GroupService) {
 
+		$scope.groups = [];
+
 		function updateGroups() {
-	  		GroupService.findAll().success(function(data) {
+	  		GroupService.findAll().then(function(data) {
 	  			$scope.groups = data;
-	  		}).error(function(data) {
+	  		}, function(data) {
 	  			AlertService.add('danger', 'Unable to load groups.');
 	  		});
 	  	}
 	  	updateGroups();
 
-  		$scope.openAddModal = function() {
+  		$scope.addGroup = function() {
   			var modal = $modal.open({
   				size: 'small',
   				templateUrl: 'editGroup.html',
@@ -32,7 +34,7 @@ angular.module('manage.controller.groups', [])
   			return modal;
   		};
 
-  		$scope.openEditModal = function(group) {
+  		$scope.editGroup = function(group) {
   			var modal = $modal.open({
   				size: 'small',
   				templateUrl: 'editGroup.html',
@@ -48,7 +50,7 @@ angular.module('manage.controller.groups', [])
   			return modal;
   		}
 
-  		$scope.delete = function(group) {
+  		$scope.deleteGroup = function(group) {
   			ReallyService.prompt({
   				body: 'Are you sure you want to delete the group "' + group.name + '"?'
   			}, GroupService.delete.bind(null, group.id)).result.then(function() {
@@ -75,14 +77,14 @@ angular.module('manage.controller.groups', [])
 		}
 
 		$scope.save = function() {
-			var promise = callback($scope.group).success(function() {
+			var deferred = $scope.tracker.createPromise();
+			var promise = callback($scope.group).then(function() {
 				AlertService.add('success', 'Successfully saved group!');
 				$modalInstance.close();
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'An error occured while saving the group.');
 				$modalInstance.dismiss();
-			});
-			$scope.tracker.addPromise(promise);
+			}).finally(deferred.resolve);
 		}
 
 	}]);

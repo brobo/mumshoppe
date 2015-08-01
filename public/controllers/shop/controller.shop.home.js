@@ -2,25 +2,36 @@ angular.module('shop.controller.home', [])
 	.controller('HomeController', [
 	'$scope',
 	'$modal',
+	'$q',
+	'AlertService',
 	'GroupService',
 	'ProductService',
 	'BackingService',
 	'MumService',
-	function($scope, $modal, GroupService, ProductService, BackingService, MumService) {
+	function($scope, $modal, $q, AlertService, GroupService, ProductService, BackingService, MumService) {
 
-		GroupService.findAll().success(function(data) {
-			$scope.groups = data;
-		});
-		ProductService.findAll().success(function(data) {
-			$scope.products = data;
-		});
-		BackingService.findAll().success(function(data) {
-			$scope.backings = data;
-			for (var i = 0; i < $scope.backings.length; i++) {
-				$scope.backings[i].imageUrl = BackingService.imageUrl($scope.backings[i].id);
-			}
+		$scope.groups = [];
+		$scope.products = [];
+		$scope.backings = [];
 
+		$q.all([
+			GroupService.findAll().then(function(data) {
+				$scope.groups = data;
+			}),
+			ProductService.findAll().then(function(data) {
+				$scope.products = data;
+			}),
+			BackingService.findAll().then(function(data) {
+				$scope.backings = data;
+				for (var i = 0; i < $scope.backings.length; i++) {
+					$scope.backings[i].imageUrl = BackingService.imageUrl($scope.backings[i].id);
+				}
+
+			})
+		]).catch(function() {
+			AlertService.add('danger', 'Failed to load mum creation data. Please refresh and try again.');
 		});
+		
 
 		$scope.createMum = function() {
 			return $modal.open({
@@ -58,9 +69,9 @@ angular.module('shop.controller.home', [])
 			var deferred = backing.tracker.createPromise();
 			MumService.create({
 				backing: backing.id
-			}).success(function() {
+			}).then(function() {
 				console.log('Success!');
-			}).error(function(error) {
+			}, function(error) {
 				console.error(error);
 			}).finally(deferred.resolve);
 		}

@@ -7,16 +7,18 @@ angular.module('manage.controller.letters', [])
 	'LetterService',
 	function($scope, $modal, AlertService, ReallyService, LetterService) {
 
+		$scope.letters = [];
+
 		function updateLetters() {
-	  		LetterService.findAll().success(function(data) {
+	  		LetterService.findAll().then(function(data) {
 	  			$scope.letters = data;
-	  		}).error(function(data) {
+	  		}, function(data) {
 	  			AlertService.add('danger', 'Unable to load letters.');
 	  		});
 	  	}
 	  	updateLetters();
 
-  		$scope.openAddModal = function() {
+  		$scope.addLetter = function() {
   			var modal = $modal.open({
   				size: 'small',
   				templateUrl: 'editLetter.html',
@@ -32,7 +34,7 @@ angular.module('manage.controller.letters', [])
   			return modal;
   		};
 
-  		$scope.openEditModal = function(letter) {
+  		$scope.editLetter = function(letter) {
   			var modal = $modal.open({
   				size: 'small',
   				templateUrl: 'editLetter.html',
@@ -48,7 +50,7 @@ angular.module('manage.controller.letters', [])
   			return modal;
   		}
 
-  		$scope.delete = function(letter) {
+  		$scope.deleteLetter = function(letter) {
   			ReallyService.prompt({
   				body: 'Are you sure you want to delete the letter "' + letter.name + '"?'
   			}, LetterService.delete.bind(null, letter.id)).result.then(function() {
@@ -75,14 +77,14 @@ angular.module('manage.controller.letters', [])
 		}
 
 		$scope.save = function() {
-			var promise = callback($scope.letter).success(function() {
+			var deferred = $scope.tracker.createPromise();
+			var promise = callback($scope.letter).then(function() {
 				AlertService.add('success', 'Successfully saved letter!');
 				$modalInstance.close();
-			}).error(function() {
+			}, function() {
 				AlertService.add('danger', 'An error occured while saving the letter.');
 				$modalInstance.dismiss();
-			});
-			$scope.tracker.addPromise(promise);
+			}).finally(deferred.resolve);
 		}
 
 	}]);
