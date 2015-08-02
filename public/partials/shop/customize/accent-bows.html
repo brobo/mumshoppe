@@ -1,0 +1,30 @@
+<h1>Accent Bows</h1>
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>Price</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="bow in bows | filter: {group: {id: mum.backing.group.id}}">
+			<td><img width="250" height="250" ng-src="{{ bow.imageUrl }}" /></td>
+			<td>{{ bow.name }}</td>
+			<td><span class="badge">{{ bow.price | currency }}</span></td>
+			<td class="col-xs-2">
+				<button class="btn btn-primary btn-sm" ng-hide="bow.tracker.active() || bow.id == mum.accentBow.id" ng-click="select(bow)">
+					Select Accent Bow
+				</button>
+				<button class="btn btn-primary btn-sm" ng-show="bow.id == mum.accentBow.id" disabled>
+					<i class="fa fa-check"></i>
+				</button>
+				<button class="btn btn-primary btn-sm" ng-show="bow.tracker.active()" disabled>
+					<i class="fa fa-spin fa-circle-o-notch"></i>
+				</button>
+			</td>
+		</tr>
+	</tbody>
+</table>

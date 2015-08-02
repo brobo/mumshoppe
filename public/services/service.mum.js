@@ -9,6 +9,9 @@ angular.module('service.mum', [])
 		findAll: function() {
 			return $http.get('api/mum').then(returnData);
 		},
+		findById: function(id) {
+			return $http.get('api/mum/' + id).then(returnData);
+		},
 		create: function(mum) {
 			return $http.post('api/mum/', mum).then(returnData);
 		},

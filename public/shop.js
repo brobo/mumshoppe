@@ -7,13 +7,17 @@ var app = angular.module('mumshoppe-shop', [
 	'controller.alerts',
 	'controller.really',
 	'shop.controller.home',
+	'shop.controller.customize',
+	'shop.controller.backings',
+	'shop.controller.accent-bows',
 	'service.alert',
+	'service.accent-bow',
 	'service.backing',
 	'service.really',
 	'service.group',
 	'service.mum',
 	'service.product'
-	]);
+]);
 
 app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
@@ -30,18 +34,21 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 			controller: 'HomeController'
 		})
 		.state('base.customize', {
-			url: '/customize',
-			templateUrl: 'customize.html'
+			url: '/customize/:mum_id',
+			templateUrl: 'customize.html',
+			controller: 'CustomizeController'
 		})
 		.state('base.customize.backings', {
 			url: '/backings',
 			parent: 'base.customize',
-			template: 'Backings'
+			templateUrl: 'customize/backings.html',
+			controller: 'BackingsController'
 		})
 		.state('base.customize.accentbows', {
 			url: '/accentbows',
 			parent: 'base.customize',
-			template: 'Accent Bows'
+			templateUrl: 'customize/accent-bows.html',
+			controller: 'AccentBowsController'
 		})
 		.state('base.customize.ribbons', {
 			url: '/ribbons',

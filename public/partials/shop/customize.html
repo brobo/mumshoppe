@@ -1,5 +1,5 @@
 <h2><i class="fa fa-4 fa-shopping-cart"></i> Customize Mum</h2>
-<div class="panel panel-default">
+<div class="panel panel-default" ng-hide="mumTracker.active()">
 	<div class="panel-heading">
 		<ul class="nav nav-pills">
 			<li role="presentation" ui-sref-active="active"><a ui-sref="base.customize.backings">Backing</a></li>
@@ -12,4 +12,7 @@
 	<div class="panel-body">
 		<div ui-view></div>
 	</div>
+</div>
+<div class="panel panel-default" ng-show="mumTracker.active()">
+	<i class="fa fa-spin fa-circle-o-notch"></i>
 </div>

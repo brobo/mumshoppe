@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use JMS\Serializer\Annotation\SerializedName;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="mums")
@@ -29,6 +31,7 @@ class Mum {
 	/**
 	 * @ORM\ManyToOne(targetEntity="AccentBow")
 	 * @ORM\JoinColumn(name="accentbow_id", referencedColumnName="id")
+     * @SerializedName("accentBow")
 	 */
 	protected $accentBow;
 
