@@ -1,119 +1,119 @@
 angular.module('manage.controller.backings', [])
-	.controller('BackingsController', [
-	'$scope',
-	'$modal',
-	'$q',
-	'AlertService',
-	'ImageEditService',
-	'ReallyService',
-	'ProductService',
-	'GroupService',
-	'BackingService',
-	function($scope, $modal, $q, AlertService, ImageEditService, ReallyService, ProductService, GroupService, BackingService) {
+.controller('BackingsController', [
+'$scope',
+'$modal',
+'$q',
+'AlertService',
+'ImageEditService',
+'ReallyService',
+'ProductService',
+'GroupService',
+'BackingService',
+function($scope, $modal, $q, AlertService, ImageEditService, ReallyService, ProductService, GroupService, BackingService) {
 
-		$scope.products = [];
-		$scope.backings = [];
+	$scope.products = [];
+	$scope.backings = [];
 
-		function updateBackings() {
-			$q.all([
-				ProductService.findAll().then(function(data) {
-					$scope.products = data;
-				}),
-				BackingService.findAll().then(function(data) {
-					$scope.backings = data;
-				})
-			]).catch(function(data) {
-				AlertService.add('danger', 'Unable to load backings.');
-			});
-		}
-		updateBackings();
-
-		$scope.openImageModal = function(backing) {
-			ImageEditService.open(BackingService.imageUrl(backing.id), BackingService.uploadImage.bind(null, backing.id));
-		}
-
-		var groups;
-		GroupService.findAll().then(function(data) {
-			groups = data;
+	function updateBackings() {
+		$q.all([
+			ProductService.findAll().then(function(data) {
+				$scope.products = data;
+			}),
+			BackingService.findAll().then(function(data) {
+				$scope.backings = data;
+			})
+		]).catch(function(data) {
+			AlertService.add('danger', 'Unable to load backings.');
 		});
+	}
+	updateBackings();
 
-		$scope.addBacking = function(product) {
-			var modal = $modal.open({
-				size: 'small',
-				templateUrl: 'editBacking.html',
-				controller: 'backings.EditBackingController',
-				resolve: {
-					callback: function() { return BackingService.create; },
-					groups: function() { return groups; },
-					backing: function() { 
-						return {
-							product: product.id
-						}; 
-					},
-					products: function() { return $scope.products; }
-				}
-			});
-			modal.result.then(updateBackings);
-		}
+	$scope.openImageModal = function(backing) {
+		ImageEditService.open(BackingService.imageUrl(backing.id), BackingService.uploadImage.bind(null, backing.id));
+	}
 
-		$scope.editBacking = function(backing) {
-			var modal = $modal.open({
-				size: 'small',
-				templateUrl: 'editBacking.html',
-				controller: 'backings.EditBackingController',
-				resolve: {
-					callback: function() { return BackingService.update.bind(null, backing.id); },
-					groups: function() { return groups; },
-					backing: function() {
-						var copy = angular.copy(backing);
-						copy.product = backing.product.id;
-						copy.group = backing.group.id;
-						return copy;
-					},
-					products: function() { return $scope.products; }
-				}
-			});
-			modal.result.then(updateBackings);
-		}
+	var groups;
+	GroupService.findAll().then(function(data) {
+		groups = data;
+	});
 
-		$scope.deleteBacking = function(backing) {
-			ReallyService.prompt({
-				body: 'Are you sure you want to delete the backing "' + backing.name + '"?'
-			}, BackingService.delete.bind(null, backing.id)).result.then(function() {
-				AlertService.add('success', 'Successfully deleted backing.');
-				updateBackings();
-			});
-		}
+	$scope.addBacking = function(product) {
+		var modal = $modal.open({
+			size: 'small',
+			templateUrl: 'editBacking.html',
+			controller: 'backings.EditBackingController',
+			resolve: {
+				callback: function() { return BackingService.create; },
+				groups: function() { return groups; },
+				backing: function() { 
+					return {
+						product: product.id
+					}; 
+				},
+				products: function() { return $scope.products; }
+			}
+		});
+		modal.result.then(updateBackings);
+	}
 
-	}])
-	.controller('backings.EditBackingController', [
-	'$scope',
-	'$modalInstance',
-	'promiseTracker',
-	'AlertService',
-	'callback',
-	'groups',
-	'products',
-	'backing',
-	function($scope, $modalInstance, promiseTracker, AlertService, callback, groups, products, backing) {
+	$scope.editBacking = function(backing) {
+		var modal = $modal.open({
+			size: 'small',
+			templateUrl: 'editBacking.html',
+			controller: 'backings.EditBackingController',
+			resolve: {
+				callback: function() { return BackingService.update.bind(null, backing.id); },
+				groups: function() { return groups; },
+				backing: function() {
+					var copy = angular.copy(backing);
+					copy.product = backing.product.id;
+					copy.group = backing.group.id;
+					return copy;
+				},
+				products: function() { return $scope.products; }
+			}
+		});
+		modal.result.then(updateBackings);
+	}
 
-		$scope.backing = backing;
-		$scope.groups = groups;
-		$scope.products = products;
+	$scope.deleteBacking = function(backing) {
+		ReallyService.prompt({
+			body: 'Are you sure you want to delete the backing "' + backing.name + '"?'
+		}, BackingService.delete.bind(null, backing.id)).result.then(function() {
+			AlertService.add('success', 'Successfully deleted backing.');
+			updateBackings();
+		});
+	}
 
-		$scope.tracker = promiseTracker();
+}])
+.controller('backings.EditBackingController', [
+'$scope',
+'$modalInstance',
+'promiseTracker',
+'AlertService',
+'callback',
+'groups',
+'products',
+'backing',
+function($scope, $modalInstance, promiseTracker, AlertService, callback, groups, products, backing) {
 
-		$scope.cancel = $modalInstance.dismiss;
+	$scope.backing = backing;
+	$scope.groups = groups;
+	$scope.products = products;
 
-		$scope.save = function() {
-			var deferred = $scope.tracker.createPromise();
-			var promise = callback($scope.backing).then(function() {
-				AlertService.add('success', 'Successfully saved backing!');
-				$modalInstance.close();
-			}, function() {
-				AlertService.add('danger', 'Unable to saving backing.');
-				$modalInstance.dismiss();
-			}).finally(deferred.resolve);
-		}
+	$scope.tracker = promiseTracker();
 
-	}]);
+	$scope.cancel = $modalInstance.dismiss;
+
+	$scope.save = function() {
+		var deferred = $scope.tracker.createPromise();
+		var promise = callback($scope.backing).then(function() {
+			AlertService.add('success', 'Successfully saved backing!');
+			$modalInstance.close();
+		}, function() {
+			AlertService.add('danger', 'Unable to saving backing.');
+			$modalInstance.dismiss();
+		}).finally(deferred.resolve);
+	}
+
+}]);

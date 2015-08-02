@@ -1,21 +1,21 @@
 angular.module('manage.service.image-edit', [])
-	.factory('ImageEditService', [
-	'$http', 
-	'$modal',
-	function($http, $modal) {
+.factory('ImageEditService', [
+'$http', 
+'$modal',
+function($http, $modal) {
 
-		return {
-			open: function(imageUrl, uploadAction) {
-				return $modal.open({
-					size: 'small',
-					controller: 'ImageEditController',
-					templateUrl: 'res/image-edit.html',
-					resolve: {
-						imageUrl: function() { return imageUrl; },
-						uploadAction: function() { return uploadAction; }
-					}
-				});
-			}
+	return {
+		open: function(imageUrl, uploadAction) {
+			return $modal.open({
+				size: 'small',
+				controller: 'ImageEditController',
+				templateUrl: 'res/image-edit.html',
+				resolve: {
+					imageUrl: function() { return imageUrl; },
+					uploadAction: function() { return uploadAction; }
+				}
+			});
 		}
+	}
 
-	}]);
+}]);
