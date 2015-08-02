@@ -55,8 +55,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 			controller: 'BackingsController'
 		})
 		.state('base.options.accentbows', {
-			templateUrl: 'options/accentbows.html',
-			controller: 'AccentbowsController'
+			templateUrl: 'options/accent-bows.html',
+			controller: 'AccentBowsController'
 		})
 		.state('base.options.letters', {
 			templateUrl: 'options/letters.html',
