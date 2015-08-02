@@ -30,6 +30,7 @@ describe('The home controller', function() {
 		GroupService.findAll.returns($q.defer().promise);
 		ProductService.findAll.returns($q.defer().promise);
 		BackingService.findAll.returns($q.defer().promise);
+		MumService.findAll.returns($q.defer().promise);
 	}));
 
 	function getController() {
@@ -66,7 +67,33 @@ describe('The home controller', function() {
 	it('should allow mums to be created', function() {
 		getController();
 
-		expect($scope.createMum.calledOnce).to.be.true;
+		expect($scope.createMum).to.be.ok.and.a('function');
+	});
+
+	it('should load all mums', function() {
+		getController();
+
+		expect(MumService.findAll.calledOnce).to.be.true;
+	});
+
+	it('should display an error on load fail', function() {
+		MumService.findAll.returns($q.reject());
+		getController();
+		$scope.$apply();
+
+		expect(AlertService.add.calledOnce).to.be.true;
+	});
+
+	it('should set the mum data', function() {
+		MumService.findAll.returns($q.resolve([
+			'mum 1',
+			'mum 2',
+			'mum 3'
+		]));
+		getController();
+		$scope.$apply();
+
+		expect($scope.mums).to.be.an('array').with.length(3);
 	});
 
 });

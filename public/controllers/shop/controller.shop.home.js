@@ -31,6 +31,15 @@ angular.module('shop.controller.home', [])
 		]).catch(function() {
 			AlertService.add('danger', 'Failed to load mum creation data. Please refresh and try again.');
 		});
+
+		function updateMums() {
+			MumService.findAll().then(function(data) {
+				$scope.mums = data;
+			}, function() {
+				AlertService.add('danger', 'Failed to load mums.');
+			});
+		}
+		updateMums();
 		
 
 		$scope.createMum = function() {

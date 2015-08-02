@@ -1,5 +1,22 @@
 <button class="btn btn-primary" ng-click="createMum()">Create Mum</button>
 
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>Status</th>
+			<th>Product</th>
+			<th>Order Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="mum in mums">
+			<td ng-non-bindable>{{ mum.status }}</td>
+			<td>{{ mum.backing.product.name }}</td>
+			<td ng-non-bindable>{{ mum.order_date }}</td>
+		</tr>
+	</tbody>
+</table>
+
 <script type="text/ng-template" id="createMum.html">
 	<div class="modal-header">
 		<h3>Create Mum</h3>
