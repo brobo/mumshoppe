@@ -21,10 +21,18 @@ function($scope, $stateParams, promiseTracker, AlertService, MumService) {
 		AlertService.add('danger', 'Unable to load the mum.');
 	});
 
-	$scope.save = function(target) {
+	$scope.save = function(mum) {
+		var target = angular.copy(mum);
+
 		if (target.backing) target.backing = target.backing.id;
 		if (target.accentBow) target.accentBow = target.accentBow.id;
+		if (target.ribbons) {
+			for (var i = 0; i < target.ribbons.length; i++) {
+				target.ribbons[i].letter = target.ribbons[i].letter.id;
+			}
+		}
 		return MumService.update($scope.mum.id, target).then(function(data) {
+			console.log(data);
 			$scope.mum = data;
 		}, function() {
 			AlertService.add('danger', 'Unable to save the mum.');

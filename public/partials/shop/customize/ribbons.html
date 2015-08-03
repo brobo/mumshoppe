@@ -1,0 +1,56 @@
+<h1>
+	Name Ribbons
+
+	<button class="btn btn-primary" ng-show="mum.ribbons.length < 2" ng-click="addRibbon()">Add Ribbon</button>
+	<button class="btn btn-primary" ng-show="mum.ribbons.length >= 2" disabled>Maximum of 2 ribbons</button>
+</h1>
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Letter Type</th>
+			<th>Price</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="ribbon in mum.ribbons">
+			<td>{{ ribbon.content }}</td>
+			<td>{{ ribbon.letter.name }}</td>
+			<td><span class="badge">{{ ribbon.letter.price * ribbon.content.length | currency }}</span></td>
+			<td>
+				<button class="btn btn-xs btn-warning" ng-click="editRibbon($index)"><i class="fa fa-pencil"></i> Edit</button>
+				<button class="btn btn-xs btn-danger" ng-hide="ribbon.tracker.active()" ng-click="deleteRibbon($index)"><i class="fa fa-trash"></i> Delete</button>
+				<button class="btn btn-xs btn-danger" ng-show="ribbon.tracker.active()" disabled><i class="fa fa-spin fa-circle-o-notch"></i></button>
+			</td>
+		</tr>
+		<tr ng-show="!mum.ribbons.length">
+			<td>You haven't added any ribbons yet!</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<script type="text/ng-template" id="editRibbon.html">
+	<div class="modal-header">
+		<h1>Edit Name Ribbon</h1>
+	</div>
+	<div class="modal-body">
+		<div class="form-group">
+			<label>Name</label>
+			<input type="text" class="input-control" ng-model="ribbon.content" ng-default="Name"/>
+		</div>
+		<div class="form-group">
+			<label>Letter Type</label>
+			<select class="input-control" ng-model="ribbon.letter" 
+				ng-options="letter as letter.name for letter in letters track by letter.id"></select>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<span class="badge pull-left">{{ ribbon.letter.price * ribbon.content.length | currency }}</span>
+		<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+		<button class="btn btn-success" ng-hide="tracker.active()" ng-click="save()">Save</button>
+		<button class="btn btn-success" ng-show="tracker.active()" disabled><i class="fa fa-sipn fa-circle-o-notch"></i></button>
+	</div>
+</script>

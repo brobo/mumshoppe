@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 /**
  * @Route("/api/ribbon")
  */
-class RibbonController extends ImageController {
+class RibbonController extends EntityController {
 
 	public function getRibbonManager() {
 		return $this->get("ribbon_manager");

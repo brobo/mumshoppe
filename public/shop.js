@@ -10,11 +10,14 @@ var app = angular.module('mumshoppe-shop', [
 	'shop.controller.customize',
 	'shop.controller.backings',
 	'shop.controller.accent-bows',
+	'shop.controller.ribbons',
 	'service.alert',
 	'service.accent-bow',
 	'service.backing',
 	'service.really',
 	'service.group',
+	'service.letter',
+	'service.ribbon',
 	'service.mum',
 	'service.product'
 ]);
@@ -53,7 +56,8 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		.state('base.customize.ribbons', {
 			url: '/ribbons',
 			parent: 'base.customize',
-			template: 'Name Ribbons'
+			templateUrl: 'customize/ribbons.html',
+			controller: 'RibbonsController'
 		})
 		.state('base.customize.bears', {
 			url: '/bears',
