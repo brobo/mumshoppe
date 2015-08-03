@@ -11,6 +11,8 @@ var app = angular.module('mumshoppe-shop', [
 	'shop.controller.backings',
 	'shop.controller.accent-bows',
 	'shop.controller.ribbons',
+	'shop.controller.accessories',
+	'shop.controller.bears',
 	'service.alert',
 	'service.accent-bow',
 	'service.backing',
@@ -18,6 +20,9 @@ var app = angular.module('mumshoppe-shop', [
 	'service.group',
 	'service.letter',
 	'service.ribbon',
+	'service.bear',
+	'service.accessory',
+	'service.category',
 	'service.mum',
 	'service.product'
 ]);
@@ -62,12 +67,14 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		.state('base.customize.bears', {
 			url: '/bears',
 			parent: 'base.customize',
-			template: 'Bears'
+			templateUrl: 'customize/bears.html',
+			controller: 'BearsController'
 		})
 		.state('base.customize.accessories', {
 			url: '/accessories',
 			parent: 'base.customize',
-			template: 'Accessories'
+			templateUrl: 'customize/accessories.html',
+			controller: 'AccessoriesController'
 		});
 
 		$httpProvider.defaults.post = {'Content-Type': 'application/x-www-form-urlencoded'};

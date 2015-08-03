@@ -1,0 +1,38 @@
+<h1>Bears</h1>
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>Price</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="bear in bears | filter : hasGroup(mum.backing.group)">
+			<td><img width="250" height="250" ng-src="{{ bear.imageUrl }}" /></td>
+			<td>{{ bear.name }}</td>
+			<td><span class="badge">{{ bear.price | currency }}</span></td>
+			<td class="col-xs-2">
+				<button class="btn btn-sm btn-primary" 
+					ng-hide="bear.tracker.active() || hasBear(bear) || mum.bears.length >= mum.backing.product.bearLimit" 
+					ng-click="addBear(bear)">
+					Add
+				</button>
+				<button class="btn btn-sm btn-primary" ng-hide="hasBear(bear) || mum.bears.length < mum.backing.product.bearLimit" disabled>
+					Maximum of {{ mum.backing.product.bearLimit}} bears
+				</button>
+				<button class="btn btn-sm btn-primary" ng-hide="bear.tracker.active() || !hasBear(bear)" ng-click="removeBear(bear)">
+					<i class="fa fa-check"></i>
+				</button>
+				<button class="btn btn-sm btn-primary" ng-show="bear.tracker.active()" disabled>
+					<i class="fa fa-spin fa-circle-o-notch"></i>
+				</button>
+			</td>
+		</tr>
+		<tr ng-show="!bears.length">
+			<td><i class="fa fa-spin fa-circle-o-notch"></i></td>
+		</tr>
+	</tbody>
+</table>
