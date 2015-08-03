@@ -14,7 +14,6 @@ function($scope, $modal, $q, promiseTracker, AlertService, LetterService, Ribbon
 
 	LetterService.findAll().then(function(data) {
 		$scope.letters = data;
-		console.log($scope.letters);
 	}, function() {
 		AlertService.add('danger', 'Unable to load letters.');
 	});
@@ -23,7 +22,7 @@ function($scope, $modal, $q, promiseTracker, AlertService, LetterService, Ribbon
 		var modal = $modal.open({
 			size: 'medium',
 			templateUrl: 'editRibbon.html',
-			controller: 'EditRibbonsController',
+			controller: 'EditRibbonController',
 			resolve: {
 				callback: function() {
 					return function(ribbon) {
@@ -53,7 +52,7 @@ function($scope, $modal, $q, promiseTracker, AlertService, LetterService, Ribbon
 		var modal = $modal.open({
 			size: 'medium',
 			templateUrl: 'editRibbon.html',
-			controller: 'EditRibbonsController',
+			controller: 'EditRibbonController',
 			resolve: {
 				callback: function() {
 					return function(target) {
@@ -91,7 +90,7 @@ function($scope, $modal, $q, promiseTracker, AlertService, LetterService, Ribbon
 	};
 
 }])
-.controller('EditRibbonsController', [
+.controller('EditRibbonController', [
 '$scope',
 '$modalInstance',
 'promiseTracker',
