@@ -14,7 +14,6 @@ function($scope, promiseTracker, AlertService, BearService) {
 			$scope.bears[i].tracker = promiseTracker();
 			$scope.bears[i].imageUrl = BearService.imageUrl($scope.bears[i].id);
 		}
-		console.log($scope.bears);
 	});
 
 	$scope.hasGroup = function(group) {
