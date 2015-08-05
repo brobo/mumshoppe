@@ -38,9 +38,9 @@ class Product {
 	protected $bearLimit;
 
     /**
-     * @ORM\OneToMany(targetEntity="Backing", mappedBy="product")
+     * ORM\OneToMany(targetEntity="Backing", mappedBy="product")
      */
-    private $backings;
+    // private $backings;
 
     public function __construct() {
         $this->backings = new ArrayCollection();

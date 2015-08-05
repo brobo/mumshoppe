@@ -23,6 +23,7 @@ var app = angular.module('mumshoppe-shop', [
 	'service.bear',
 	'service.accessory',
 	'service.category',
+	'service.accessory-association',
 	'service.mum',
 	'service.product'
 ]);

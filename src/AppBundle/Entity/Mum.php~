@@ -2,6 +2,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use JMS\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity
@@ -17,17 +20,14 @@ class Mum {
 	protected $id;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Accessory")
-	 * @ORM\JoinTable(name="mum_accessories",
-	 * 		joinColumns={@ORM\JoinColumn(name="mum_id", referencedColumnName="id")},
-	 * 		inverseJoinColumns={@ORM\JoinColumn(name="accessory_id", referencedColumnName="id")}
-	 *  )
+     * @ORM\OneToMany(targetEntity="AccessoryAssociation", mappedBy="mum")
 	 */
-	protected $accessories;
+	protected $accessoryAssociations;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="AccentBow")
 	 * @ORM\JoinColumn(name="accentbow_id", referencedColumnName="id")
+     * @SerializedName("accentBow")
 	 */
 	protected $accentBow;
 
@@ -56,4 +56,126 @@ class Mum {
 		$bears = new ArrayCollection();
 	}
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set accentBow
+     *
+     * @param \AppBundle\Entity\AccentBow $accentBow
+     * @return Mum
+     */
+    public function setAccentBow(\AppBundle\Entity\AccentBow $accentBow = null)
+    {
+        $this->accentBow = $accentBow;
+
+        return $this;
+    }
+
+    /**
+     * Get accentBow
+     *
+     * @return \AppBundle\Entity\AccentBow 
+     */
+    public function getAccentBow()
+    {
+        return $this->accentBow;
+    }
+
+    /**
+     * Set backing
+     *
+     * @param \AppBundle\Entity\Backing $backing
+     * @return Mum
+     */
+    public function setBacking(\AppBundle\Entity\Backing $backing = null)
+    {
+        $this->backing = $backing;
+
+        return $this;
+    }
+
+    /**
+     * Get backing
+     *
+     * @return \AppBundle\Entity\Backing 
+     */
+    public function getBacking()
+    {
+        return $this->backing;
+    }
+
+    /**
+     * Add bears
+     *
+     * @param \AppBundle\Entity\Bear $bears
+     * @return Mum
+     */
+    public function addBear(\AppBundle\Entity\Bear $bears)
+    {
+        $this->bears[] = $bears;
+
+        return $this;
+    }
+
+    /**
+     * Remove bears
+     *
+     * @param \AppBundle\Entity\Bear $bears
+     */
+    public function removeBear(\AppBundle\Entity\Bear $bears)
+    {
+        $this->bears->removeElement($bears);
+    }
+
+    /**
+     * Get bears
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getBears()
+    {
+        return $this->bears;
+    }
+
+    /**
+     * Add ribbons
+     *
+     * @param \AppBundle\Entity\Ribbon $ribbons
+     * @return Mum
+     */
+    public function addRibbon(\AppBundle\Entity\Ribbon $ribbons)
+    {
+        $this->ribbons[] = $ribbons;
+
+        return $this;
+    }
+
+    /**
+     * Remove ribbons
+     *
+     * @param \AppBundle\Entity\Ribbon $ribbons
+     */
+    public function removeRibbon(\AppBundle\Entity\Ribbon $ribbons)
+    {
+        $this->ribbons->removeElement($ribbons);
+    }
+
+    /**
+     * Get ribbons
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRibbons()
+    {
+        return $this->ribbons;
+    }
 }

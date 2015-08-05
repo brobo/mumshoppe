@@ -80,3 +80,9 @@ services:
         parent: entity_manager
         calls:
             - [setRepo, ["Mum"]]
+
+    accessory_association_manager:
+        class: AppBundle\Service\AccessoryAssociationService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["AccessoryAssociation"]]

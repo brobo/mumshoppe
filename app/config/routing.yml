@@ -57,3 +57,7 @@ customer:
 mum:
     resource: "@AppBundle/Controller/MumController.php"
     type: annotation
+
+association:
+    resource: "@AppBundle/Controller/AccessoryAssociationController.php"
+    type: annotation

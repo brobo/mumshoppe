@@ -28,10 +28,10 @@ class Group {
 	protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bear", mappedBy="groups")
+     * ORM\ManyToMany(targetEntity="Bear", mappedBy="groups")
      * @var ArrayCollection
      */
-    protected $bears;
+    // protected $bears;
 
     public function __construct() {
         $this->bears = new ArrayCollection();

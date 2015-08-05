@@ -1,0 +1,36 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/** 
+ * @ORM\Entity
+ * @ORM\Table(name="accessory_associations")
+ */
+class AccessoryAssociation {
+
+	/**
+	 * @ORM\Id
+	 * @ORM\GeneratedValue
+	 * @ORM\Column(type="integer")
+	 */
+	protected $id;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Mum")
+	 * @ORM\JoinColumn(name="mum_id", referencedColumnName="id")
+	 */
+	protected $mum;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Accessory")
+	 * @ORM\JoinColumn(name="accessory_id", referencedColumnName="id")
+	 */
+	protected $accessory;
+
+	/**
+	 * @ORM\Column(type="integer")
+	 */
+	protected $quantity;
+
+}

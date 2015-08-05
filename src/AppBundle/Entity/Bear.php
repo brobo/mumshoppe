@@ -37,7 +37,7 @@ class Bear extends VisualEntity {
     protected $price;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Group", inversedBy="bears")
+	 * @ORM\ManyToMany(targetEntity="Group")
 	 * @ORM\JoinTable(name="bears_groups", 
 	 * 	joinColumns={@ORM\JoinColumn(name="bear_id", referencedColumnName="id")},
 	 * 	inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}

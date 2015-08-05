@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Accessory;
+use AppBundle\Entity\AccessoryAssociation;
 use AppBundle\Form\AccessoryType;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,30 @@ class AccessoryController extends ImageController {
 
 	public function __construct() {
 		parent::__construct('Accessory', 'AccessoryType');
+	}
+
+	/**
+	 * @Route("/{accessoryId}/mum/{mumId}/{quantity}")
+	 * @Method({"PUT"})
+	 */
+	public function mumAssociation($accessoryId, $mumId, $quantity) {
+		$em = $this->getDoctrine()->getManager();
+		$repo = $em->getRepository('AppBundle:AccessoryAssociation');
+
+		$mum = $em->getRepository('AppBundle:Mum')->findById($mumId);
+		$accessory = $em->getRepository('AppBundle:Accessory')->findById($accessoryId);
+
+		if (!$mum || !$accessory) {
+			return $this->fail();
+		}
+
+		var_dump($mum);
+
+		$association = new AccessoryAssociation($mum, $accessory, $quantity);
+		$em->persist($association);
+		$em->flush();
+
+		return $this->succeed();
 	}
 
 	// /**

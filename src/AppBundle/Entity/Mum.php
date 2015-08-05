@@ -20,13 +20,10 @@ class Mum {
 	protected $id;
 
 	/**
-	 * @ORM\ManyToMany(targetEntity="Accessory")
-	 * @ORM\JoinTable(name="mum_accessories",
-	 * 		joinColumns={@ORM\JoinColumn(name="mum_id", referencedColumnName="id")},
-	 * 		inverseJoinColumns={@ORM\JoinColumn(name="accessory_id", referencedColumnName="id")}
-	 *  )
+     * @ORM\OneToMany(targetEntity="AccessoryAssociation", mappedBy="mum")
+     * @SerializedName("associations")
 	 */
-	protected $accessories;
+	protected $accessoryAssociations;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="AccentBow")
@@ -56,7 +53,6 @@ class Mum {
 	protected $ribbons;
 
 	public function __construct() {
-		$accessories = new ArrayCollection();
 		$bears = new ArrayCollection();
 	}
 
@@ -69,39 +65,6 @@ class Mum {
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Add accessories
-     *
-     * @param \AppBundle\Entity\Accessory $accessories
-     * @return Mum
-     */
-    public function addAccessory(\AppBundle\Entity\Accessory $accessories)
-    {
-        $this->accessories[] = $accessories;
-
-        return $this;
-    }
-
-    /**
-     * Remove accessories
-     *
-     * @param \AppBundle\Entity\Accessory $accessories
-     */
-    public function removeAccessory(\AppBundle\Entity\Accessory $accessories)
-    {
-        $this->accessories->removeElement($accessories);
-    }
-
-    /**
-     * Get accessories
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getAccessories()
-    {
-        return $this->accessories;
     }
 
     /**
@@ -214,5 +177,38 @@ class Mum {
     public function getRibbons()
     {
         return $this->ribbons;
+    }
+
+    /**
+     * Add accessoryAssociations
+     *
+     * @param \AppBundle\Entity\AccessoryAssociation $accessoryAssociations
+     * @return Mum
+     */
+    public function addAccessoryAssociation(\AppBundle\Entity\AccessoryAssociation $accessoryAssociations)
+    {
+        $this->accessoryAssociations[] = $accessoryAssociations;
+
+        return $this;
+    }
+
+    /**
+     * Remove accessoryAssociations
+     *
+     * @param \AppBundle\Entity\AccessoryAssociation $accessoryAssociations
+     */
+    public function removeAccessoryAssociation(\AppBundle\Entity\AccessoryAssociation $accessoryAssociations)
+    {
+        $this->accessoryAssociations->removeElement($accessoryAssociations);
+    }
+
+    /**
+     * Get accessoryAssociations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAccessoryAssociations()
+    {
+        return $this->accessoryAssociations;
     }
 }

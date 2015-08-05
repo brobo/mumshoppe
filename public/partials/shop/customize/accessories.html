@@ -1,0 +1,69 @@
+<h1>Accessories</h1>
+
+<label>View Category: </label>
+<select class="form-control" ng-options="category.id as category.name for category in categories" ng-model="selectedCategory">
+	<option value="">All</option>
+</select>
+
+<table class="table table-striped table-hover">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Name</th>
+			<th>Price</th>
+			<th>Quantity</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="accessory in accessories | filter : filterAccessories(mum.backing.group)">
+			<td><img width="250" height="250" ng-src="{{ accessory.imageUrl }}" /></td>
+			<td>{{ accessory.name }}</td>
+			<td><span class="badge">{{ accessory.price | currency }}</span></td>
+			<td>
+				{{ associations[accessory.id].quantity }}
+				<span class="badge" ng-show="hasAccessory(accessory)">
+					({{ associations[accessory.id].quantity * accessory.price | currency }})
+				</span>
+			</td>
+			<td class="col-xs-2">
+				<button class="btn btn-xs btn-success" ng-hide="hasAccessory(accessory)" ng-click="addAssociation(accessory)">Add</button>
+				<button class="btn btn-xs btn-warning" ng-show="hasAccessory(accessory)" ng-click="editAssociation(accessory)">Change Quantity</button>
+				<button class="btn btn-xs btn-danger" ng-show="hasAccessory(accessory) && !accessory.tracker.active()" ng-click="removeAssociation(accessory)">Remove</button>
+				<button class="btn btn-xs btn-danger" ng-show="accessory.tracker.active()" disabled><i class="fa fa-spin fa-circle-o-notch"></i></button>
+			</td>
+		</tr>
+		<tr ng-show="!accessories.length">
+			<td><i class="fa fa-spin fa-circle-o-notch"></i></td>
+		</tr>
+	</tbody>
+</table>
+
+<script type="text/ng-template" id="edit-association.html">
+	<div class="modal-header">
+		<h1>Change quantity of {{ association.accessory.name }}</h1>
+	</div>
+	<div class="modal-body">
+		<div class="input-group">
+			<span class="input-group-btn">
+				<button class="btn btn-default" ng-disabled="association.quantity <= 1" ng-click="decrease()">
+					<i class="fa fa-minus"></i>
+				</button>
+			</span>
+			<input class="form-control" type="number" ng-model="association.quantity" ng-min="1" />
+			<span class="input-group-btn">
+				<button class="btn btn-default" ng-click="increase()">
+					<i class="fa fa-plus"></i>
+				</button>
+			</span>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<span class="badge pull-left">{{ association.quantity * accessory.price | currency }}</span>
+		<button class="btn btn-default pull-right" ng-click="cancel()">Cancel</button>
+		<button class="btn btn-success pull-right" ng-hide="tracker.active()" ng-click="save()">Save</button>
+		<button class="btn btn-success pull-right" ng-show="tracker.active()" disabled>
+			<i class="fa fa-spin fa-circle-o-notch"></i>
+		</button>
+	</div>
+</script>

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class MumType extends AbstractType
+class AccessoryAssociationType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,10 +15,9 @@ class MumType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('accessoryAssociations')
-            ->add('accentBow')
-            ->add('backing')
-            ->add('bears')
+            ->add('quantity')
+            ->add('mum')
+            ->add('accessory')
         ;
     }
     
@@ -28,9 +27,9 @@ class MumType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'allow_extra_fields' => true,
-            'data_class' => 'AppBundle\Entity\Mum',
-            'csrf_protection' => false
+            'data_class' => 'AppBundle\Entity\AccessoryAssociation',
+            'csrf_protection' => false,
+            'allow_extra_fields' => true
         ));
     }
 
@@ -39,6 +38,6 @@ class MumType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_mum';
+        return 'appbundle_accessoryassociation';
     }
 }

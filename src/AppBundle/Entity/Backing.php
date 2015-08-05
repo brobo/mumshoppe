@@ -34,7 +34,7 @@ class Backing extends VisualEntity {
 	protected $price;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Product", inversedBy="backings")
+	 * @ORM\ManyToOne(targetEntity="Product")
 	 * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
 	 */
 	protected $product;
