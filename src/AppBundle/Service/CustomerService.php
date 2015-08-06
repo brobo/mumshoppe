@@ -3,8 +3,8 @@ namespace AppBundle\Service;
 
 class CustomerService extends EntityService {
 
-	public function logIn($id, $password) {
-		$customer = $this->findById($id);
+	public function logIn($email, $password) {
+		$customer = $this->repo->findOneByEmail($email);
 		if ($customer === null) {
 			return false;
 		} else {

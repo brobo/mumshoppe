@@ -1,0 +1,29 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="tokens")
+ */
+class Token {
+
+	/**
+	 * @ORM\Id
+	 * @ORM\GeneratedValue
+	 * @ORM\Column(type="integer")
+	 */
+	protected $id;
+
+	/**
+	 * @ORM\Column(type="string")
+	 */
+	protected $value;
+
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $expires;
+
+}

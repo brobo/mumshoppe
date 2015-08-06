@@ -2,10 +2,12 @@ var app = angular.module('mumshoppe-shop', [
 	'ui.router',
 	'ui.bootstrap',
 	'ajoslin.promise-tracker',
+	'ngMessages',
 	'shared.partials',
 	'shop.partials',
 	'controller.alerts',
 	'controller.really',
+	'shop.controller.login',
 	'shop.controller.home',
 	'shop.controller.customize',
 	'shop.controller.backings',
@@ -14,6 +16,7 @@ var app = angular.module('mumshoppe-shop', [
 	'shop.controller.accessories',
 	'shop.controller.bears',
 	'service.alert',
+	'service.customer',
 	'service.accent-bow',
 	'service.backing',
 	'service.really',
@@ -33,6 +36,11 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 	$stateProvider
 		.state('index', {
 			url: ''
+		})
+		.state('login', {
+			url: '/login',
+			templateUrl: 'login.html',
+			controller: 'LoginController'
 		})
 		.state('base', {
 			templateUrl: 'base.html'

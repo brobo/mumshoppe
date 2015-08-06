@@ -1,100 +1,75 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Bear;
-use AppBundle\Form\BearType;
+use AppBundle\Entity\Token;
 
 use Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use \Firebase\JWT\JWT;
+
 /**
  * @Route("/api/customer")
  */
-class CustomerController extends RestController {
+class CustomerController extends EntityController {
 
 	public function getCustomerManager() {
 		return $this->get('customer_manager');
 	}
 
-	/**
-	 * @Route("/")
-	 * @Method({"GET"})
-	 */
-	public function indexAction() {
-		$customers = $this->getCustomerManager()->findAll();
+	public function getEntityManager() {
+		return $this->getCustomerManager();
+	}
 
-		return $this->respondJson($customers);
+	public function __construct() {
+		return parent::__construct('Customer', 'CustomerType');
 	}
 
 	/**
-	 * @Route("/{id}")
-	 * @Method({"GET"})
-	 */
-	public function showAction($id) {
-		$customer = $this->getCustomerManager()->findById($id);
-
-		if ($customer === null) {
-			return $this->fail();
-		} else {
-			return $this->respondJson($customer);
-		}
-	}
-
-	/**
-	 * @Route("/")
-	 * @Method({"POST"})
-	 */
-	public function postAction(Request $request) {
-		$customer = new Customer();
-
-		$form = $this->createForm(new CustomerType(), $customer);
-		$form->submit($request->request->all());
-
-		if ($form->isValid()) {
-			$this->getCustomerManager()->save($customer);
-
-			return $this->respondJson($customer, 200);
-		} else {
-			$this->fail($form->getErrors());
-		}
-	}
-
-	/**
-	 * @Route("/{id}")
+	 * @Route("/login")
 	 * @Method({"PUT"})
 	 */
-	public function putAction(Request $request, $id) {
-		$customer = $this->getCustomerManager()->findById($id);
+	public function login(Request $request) {
+		$email = $request->request->get('customer_email');
+		$password = $request->request->get('customer_password');
 
-		if ($customer === null) {
+		$customer = $this->getCustomerManager()->getRepo()->findOneByEmail($email);
+
+		if (!$customer) {
 			return $this->fail();
-		} else {
-			$form = $this->createForm(new CustomerType(), $customer);
-			$form->submit($request->request->all());
+		}
 
-			if ($form->isValid()) {
-				return $this->respondJson($customer);
-			} else {
-				return $this->fail();
+		$em = $this->getDoctrine()->getManager();
+
+		if ($customer->verifyPassword($password)) {
+			$expire = new \DateTime('now');
+			$expire->modify('+20 minute');
+			$token = new Token($expire);
+
+			if ($customer->getToken()) {
+				$em->remove($customer->getToken());
 			}
+			$customer->setToken($token);
+
+			$em->persist($token);
+			$em->persist($customer);
+			$em->flush();
+
+			$key = $this->container->getParameter('jwt_key');
+			$payload = array(
+				'type' => 'customer',
+				'user_id' => $customer->getId(),
+				'token_id' => $token->getId(),
+				'expires' => $token->getExpires()
+			);
+
+			return $this->respondJson(array(
+				'jwt' => JWT::encode($payload, $key)
+			));
 		}
-	}
 
-	/**
-	 * @Route("/{id}")
-	 * @Method({"DELETE"})
-	 */
-	public function deleteAction($id) {
-		$customer = $this->getCustomerManager()->findById($id);
-
-		if ($customer === null) {
-			return $this->fail();
-		} else {
-			$this->getCustomerManager()->delete($customer);
-
-			return $this->succeed();
-		}
+		return $this->fail();
 	}
 }

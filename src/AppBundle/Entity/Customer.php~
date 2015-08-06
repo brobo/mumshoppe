@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+use JMS\Serializer\Annotation\SerializedName;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="customers")
@@ -35,21 +37,29 @@ class Customer {
 	 * @ORM\Column(type="string", length=32)
 	 * @Assert\NotBlank()
 	 * @Assert\Regex(pattern="/[a-zA-Z ]+/", message="{{ value }} is not a valid last name.")
+     * @SerializedName("firstName")
 	 */
-	protected $first_name;
+	protected $firstName;
 
 	/**
 	 * @ORM\Column(type="string", length=32)
 	 * @Assert\NotBlank()
-	 * @Assert\Regex(pattern="/[a-zA-Z ]+", message="{{ value }} is not a valid last name.")
+	 * @Assert\Regex(pattern="/[a-zA-Z ]+/", message="{{ value }} is not a valid last name.")
+     * @SerializedName("lastName")
 	 */
-	protected $last_name;
+	protected $lastName;
 
 	/**
 	 * @ORM\Column(type="string", length=16)
 	 * @Assert\Regex(pattern="/[0-9-]+/", message="The phone number '{{ value }}' is not valid.")
 	 */
 	protected $phone;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Token")
+     * @ORM\JoinColumn(name="token_id", referencedColumnName="id")
+     */
+    protected $token;
 
 
     /**

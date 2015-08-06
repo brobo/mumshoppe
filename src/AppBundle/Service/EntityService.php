@@ -16,6 +16,10 @@ class EntityService {
 		$this->repo = $this->em->getRepository("AppBundle:" . $repoType);
 	}
 
+	public function getRepo() {
+		return $this->repo;
+	}
+
 	public function findAll() {
 		return $this->repo->findAll();
 	}
