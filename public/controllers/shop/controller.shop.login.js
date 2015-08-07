@@ -1,10 +1,13 @@
 angular.module('shop.controller.login', [])
 .controller('LoginController', [
 '$scope',
+'$cookies',
+'$state',
+'jwtHelper',
 'promiseTracker',
 'AlertService',
 'CustomerService',
-function($scope, promiseTracker, AlertService, CustomerService) {
+function($scope, $cookies, $state, jwtHelper, promiseTracker, AlertService, CustomerService) {
 
 	$scope.PHONE_REGEX = /^(\(?[0-9]+\)?[- ]?){3,4}$/;
 
@@ -25,10 +28,10 @@ function($scope, promiseTracker, AlertService, CustomerService) {
 	}
 
 	$scope.doLogin = function() {
-		console.log('login');
 		var deferred = $scope.tracker.createPromise();
-		CustomerService.login($scope.customer).then(function() {
-			console.log('Success!');
+		CustomerService.login($scope.customer).then(function(data) {
+			$cookies.put('jwt', data.jwt);
+			$state.go('base.home');
 		}, function() {
 			AlertService.add('danger', 'Invalid username / password combination.');
 		}).finally(deferred.resolve);

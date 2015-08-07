@@ -1,7 +1,9 @@
 var app = angular.module('mumshoppe-shop', [
+	'angular-jwt',
 	'ui.router',
 	'ui.bootstrap',
 	'ajoslin.promise-tracker',
+	'ngCookies',
 	'ngMessages',
 	'shared.partials',
 	'shop.partials',
@@ -31,7 +33,11 @@ var app = angular.module('mumshoppe-shop', [
 	'service.product'
 ]);
 
-app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+app.config([
+'$stateProvider',
+'$urlRouterProvider',
+'$httpProvider',
+function($stateProvider, $urlRouterProvider, $httpProvider) {
 
 	$stateProvider
 		.state('index', {
@@ -89,5 +95,4 @@ app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 		$httpProvider.defaults.post = {'Content-Type': 'application/x-www-form-urlencoded'};
 		$httpProvider.defaults.put = {'Content-Type': 'application/x-www-form-urlencoded'};
 
-});
-
+}]);

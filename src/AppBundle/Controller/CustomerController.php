@@ -32,8 +32,8 @@ class CustomerController extends EntityController {
 	 * @Method({"PUT"})
 	 */
 	public function login(Request $request) {
-		$email = $request->request->get('customer_email');
-		$password = $request->request->get('customer_password');
+		$email = $request->request->get('email');
+		$password = $request->request->get('password');
 
 		$customer = $this->getCustomerManager()->getRepo()->findOneByEmail($email);
 

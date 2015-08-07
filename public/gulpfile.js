@@ -30,10 +30,12 @@ gulp.task('twig', function() {
 gulp.task('vendor', function() {
 	return gulp.src([
 			'node_modules/angular/angular.js',
+			'node_modules/angular-cookies/angular-cookies.js',
 			'node_modules/angular-promise-tracker/promise-tracker.js',
 			'node_modules/angular-ui-router/release/angular-ui-router.js',
 			'node_modules/angular-bootstrap/dist/ui-bootstrap-tpls.js',
-			'node_modules/angular-messages/angular-messages.js'
+			'node_modules/angular-messages/angular-messages.js',
+			'node_modules/angular-jwt/dist/angular-jwt.js'
 		])
 		.pipe(concat('vendor.js'))
 		// .pipe(uglify())
