@@ -17,6 +17,7 @@ var app = angular.module('mumshoppe-shop', [
 	'shop.controller.ribbons',
 	'shop.controller.accessories',
 	'shop.controller.bears',
+	'shop.controller.review',
 	'service.alert',
 	'service.customer',
 	'service.accent-bow',
@@ -30,7 +31,8 @@ var app = angular.module('mumshoppe-shop', [
 	'service.category',
 	'service.accessory-association',
 	'service.mum',
-	'service.product'
+	'service.product',
+	'service.order'
 ]);
 
 app.config([
@@ -57,7 +59,7 @@ function($stateProvider, $urlRouterProvider, $httpProvider) {
 			controller: 'HomeController'
 		})
 		.state('base.customize', {
-			url: '/customize/:mum_id',
+			url: '/customize/:order_id',
 			templateUrl: 'customize.html',
 			controller: 'CustomizeController'
 		})
@@ -90,7 +92,13 @@ function($stateProvider, $urlRouterProvider, $httpProvider) {
 			parent: 'base.customize',
 			templateUrl: 'customize/accessories.html',
 			controller: 'AccessoriesController'
-		});
+		})
+		.state('base.customize.review', {
+			url: '/review',
+			parent: 'base.customize',
+			templateUrl: 'customize/review.html',
+			controller: 'ReviewController'
+		})
 
 		$httpProvider.defaults.post = {'Content-Type': 'application/x-www-form-urlencoded'};
 		$httpProvider.defaults.put = {'Content-Type': 'application/x-www-form-urlencoded'};

@@ -7,12 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use JMS\Serializer\Annotation\SerializedName;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="customers")
  */
 class Customer {
+
+    public function __construct() {
+        $this->orders = new ArrayCollection();
+    }
 
 	/**
 	 * @ORM\Column(type="integer")
@@ -58,8 +63,14 @@ class Customer {
     /**
      * @ORM\OneToOne(targetEntity="Token")
      * @ORM\JoinColumn(name="token_id", referencedColumnName="id")
+     * @Exclude
      */
     protected $token;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="customer")
+     */
+    protected $orders;
 
 
     /**
@@ -195,5 +206,61 @@ class Customer {
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * Set token
+     *
+     * @param \AppBundle\Entity\Token $token
+     * @return Customer
+     */
+    public function setToken(\AppBundle\Entity\Token $token = null)
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * Get token
+     *
+     * @return \AppBundle\Entity\Token 
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \AppBundle\Entity\Order $orders
+     * @return Customer
+     */
+    public function addOrder(\AppBundle\Entity\Order $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \AppBundle\Entity\Order $orders
+     */
+    public function removeOrder(\AppBundle\Entity\Order $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

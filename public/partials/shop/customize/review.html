@@ -1,0 +1,115 @@
+<h1>Review</h1>
+
+<div class="panel panel-info">
+	<div class="panel-heading">Customer</div>
+	<table class="table table-striped">
+		<tr>
+			<th>Name</th>
+			<td>{{ order.customer.firstName }} {{ order.customer.lastName }}</td>
+		</tr>
+		<tr>
+			<th>Email</th>
+			<td>{{ order.customer.email }}</td>
+		</tr>
+		<tr>
+			<th>Phone Number</th>
+			<td>{{ order.customer.phone }}</td>
+		</tr>
+	</table>
+</div>
+
+<div class="panel panel-info">
+	<div class="panel-heading">{{ mum.product.name }} Options</div>
+	<table class="table table-striped">
+		<tr>
+			<th>Product</th>
+			<td>{{ mum.backing.product.name }}</td>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Group</th>
+			<td>{{ mum.backing.group.name }}</td>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Backing</th>
+			<td>{{ mum.backing.name }}</td>
+			<td><span class="badge">{{ mum.backing.price | currency}}</span></td>
+		</tr>
+		<tr>
+			<th>Accent Bow</th>
+			<td>{{ mum.accentbow.name }}</td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+
+<div class="panel" ng-class="mum.ribbons.length ? 'panel-info' : 'panel-danger'">
+	<div class="panel-heading">Name Ribbons</div>
+	<div class="panel-body" ng-show="!mum.ribbons.length"><p class="text-danger">No name ribbons added</p></div>
+	<table class="table table-striped" ng-hide="!mum.ribbons.length">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Letter Type</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="ribbon in mum.ribbons">
+				<td>{{ ribbon.content }}</td>
+				<td>{{ ribbon.letter.name }} ({{ ribbon.letter.price | currency }} per letter)</td>
+				<td><span class="badge">{{ ribbon.content.length * ribbon.letter.price | currency }}</span></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="panel" ng-class="mum.bears.length ? 'panel-info' : 'panel-danger'">
+	<div class="panel-heading">Bears</div>
+	<div class="panel-body" ng-show="!mum.bears.length"><p class="text-danger">No bears added</p></div>
+	<table class="table table-striped" ng-hide="!mum.bears.length">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Price</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="bear in mum.bears">
+				<td>{{ bear.name }}</td>
+				<td><span class="badge">{{ bear.price | currency }}</span></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="panel panel-info">
+	<div class="panel-heading">Accessories</div>
+	<div class="panel-body">
+		<div ng-repeat="category in categories" ng-init="associations = (mum.associations | filter : {accessory: {category: {id: category.id}}})">
+			<div class="panel" ng-class="associations.length ? 'panel-default' : 'panel-danger'">
+				<div class="panel-heading">{{ category.name }}</div>
+				<div class="panel-body" ng-show="!associations.length"><p class="text-danger">No {{ category.name }} accessories added</p></div>
+				<table class="table table-striped" ng-hide="!associations.length">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Unit Price</th>
+							<th>Quantity</th>
+							<th>Price</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="association in associations">
+							<td>{{ association.accessory.name }}</td>
+							<td>{{ association.accessory.price | currency }}</td>
+							<td>{{ association.quantity }}</td>
+							<td><span class="badge">{{ association.accessory.price * association.quantity | currency }}</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

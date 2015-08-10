@@ -5,20 +5,22 @@ angular.module('shop.controller.customize', [])
 'promiseTracker',
 'AlertService',
 'MumService',
-function($scope, $stateParams, promiseTracker, AlertService, MumService) {
+'OrderService',
+function($scope, $stateParams, promiseTracker, AlertService, MumService, OrderService) {
 
-	$scope.mum_id = $stateParams.mum_id;
+	$scope.order_id = $stateParams.order_id;
+	$scope.order = {};
 	$scope.mum = {};
 
 	$scope.mumTracker = promiseTracker();
 	var deferred = $scope.mumTracker.createPromise();
 
-	$scope.mumPromise = MumService.findById($scope.mum_id).then(function(data) {
-		$scope.mum = data;
+	$scope.mumPromise = OrderService.findById($scope.order_id).then(function(data) {
+		$scope.order = data;
+		$scope.mum = data.mum;
 		deferred.resolve();
-		console.log($scope.mum);
 	}, function() {
-		AlertService.add('danger', 'Unable to load the mum.');
+		AlertService.add('danger', 'Unable to load the order.');
 	});
 
 	$scope.save = function(mum) {

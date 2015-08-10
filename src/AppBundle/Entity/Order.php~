@@ -1,0 +1,159 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+use JMS\Serializer\Annotation\SerializedName;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="orders")
+ */
+class Order {
+
+    public function __construct($customer, $mum) {
+        $this->customer = $customer;
+        $this->mum = $mum;
+        $this->created = new \DateTime('now');
+    }
+
+	/**
+	 * @ORM\Id
+	 * @ORM\GeneratedValue
+	 * @ORM\Column(type="integer")
+	 */
+	protected $id;
+
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $created;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $deposited;
+
+	/**
+	 * @ORM\Column(type="boolean")
+	 */
+	protected $paid;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Customer", inversedBy="orders")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     */
+    protected $customer;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="Mum")
+	 * @ORM\JoinColumn(name="mum_id", referencedColumnName="id")
+	 */
+	protected $mum;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set deposited
+     *
+     * @param boolean $deposited
+     * @return Order
+     */
+    public function setDeposited($deposited)
+    {
+        $this->deposited = $deposited;
+
+        return $this;
+    }
+
+    /**
+     * Get deposited
+     *
+     * @return boolean 
+     */
+    public function getDeposited()
+    {
+        return $this->deposited;
+    }
+
+    /**
+     * Set paid
+     *
+     * @param boolean $paid
+     * @return Order
+     */
+    public function setPaid($paid)
+    {
+        $this->paid = $paid;
+
+        return $this;
+    }
+
+    /**
+     * Get paid
+     *
+     * @return boolean 
+     */
+    public function getPaid()
+    {
+        return $this->paid;
+    }
+
+    /**
+     * Set mum
+     *
+     * @param \AppBundle\Entity\Mum $mum
+     * @return Order
+     */
+    public function setMum(\AppBundle\Entity\Mum $mum = null)
+    {
+        $this->mum = $mum;
+
+        return $this;
+    }
+
+    /**
+     * Get mum
+     *
+     * @return \AppBundle\Entity\Mum 
+     */
+    public function getMum()
+    {
+        return $this->mum;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Order
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+}

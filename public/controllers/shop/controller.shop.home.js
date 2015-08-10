@@ -58,13 +58,16 @@ function($scope, $modal, $q, AlertService, GroupService, ProductService, Backing
 }])
 .controller('home.CreateController', [
 '$scope',
+'$cookies',
 '$modalInstance',
+'jwtHelper',
 'promiseTracker',
 'MumService',
+'OrderService',
 'groups',
 'products',
 'backings',
-function($scope, $modalInstance, promiseTracker, MumService, groups, products, backings) {
+function($scope, $cookies, $modalInstance, jwtHelper, promiseTracker, MumService, OrderService, groups, products, backings) {
 
 	$scope.groups = groups;
 	$scope.products = products;
@@ -78,8 +81,13 @@ function($scope, $modalInstance, promiseTracker, MumService, groups, products, b
 		var deferred = backing.tracker.createPromise();
 		MumService.create({
 			backing: backing.id
-		}).then(function() {
-			console.log('Success!');
+		})
+		.then(function(data) {
+			var customerId = jwtHelper.decodeToken($cookies.get('jwt')).user_id;
+			return OrderService.create(customerId, data.id);
+		})
+		.then(function(data) {
+			$state.go('base.customize', {order_id: data.id});
 		}, function(error) {
 			console.error(error);
 		}).finally(deferred.resolve);

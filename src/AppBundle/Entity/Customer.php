@@ -15,6 +15,10 @@ use JMS\Serializer\Annotation\Exclude;
  */
 class Customer {
 
+    public function __construct() {
+        $this->orders = new ArrayCollection();
+    }
+
 	/**
 	 * @ORM\Column(type="integer")
 	 * @ORM\Id
@@ -62,6 +66,11 @@ class Customer {
      * @Exclude
      */
     protected $token;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="customer")
+     */
+    protected $orders;
 
 
     /**
@@ -220,5 +229,38 @@ class Customer {
     public function getToken()
     {
         return $this->token;
+    }
+
+    /**
+     * Add orders
+     *
+     * @param \AppBundle\Entity\Order $orders
+     * @return Customer
+     */
+    public function addOrder(\AppBundle\Entity\Order $orders)
+    {
+        $this->orders[] = $orders;
+
+        return $this;
+    }
+
+    /**
+     * Remove orders
+     *
+     * @param \AppBundle\Entity\Order $orders
+     */
+    public function removeOrder(\AppBundle\Entity\Order $orders)
+    {
+        $this->orders->removeElement($orders);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 }

@@ -86,3 +86,9 @@ services:
         parent: entity_manager
         calls:
             - [setRepo, ["AccessoryAssociation"]]
+
+    order_manager:
+        class: AppBundle\Service\OrderService
+        parent: entity_manager
+        calls:
+            - [setRepo, ["Order"]]
