@@ -18,6 +18,7 @@ var app = angular.module('mumshoppe-shop', [
 	'shop.controller.accessories',
 	'shop.controller.bears',
 	'shop.controller.review',
+	'shop.controller.pay',
 	'service.alert',
 	'service.customer',
 	'service.accent-bow',
@@ -98,6 +99,11 @@ function($stateProvider, $urlRouterProvider, $httpProvider) {
 			parent: 'base.customize',
 			templateUrl: 'customize/review.html',
 			controller: 'ReviewController'
+		})
+		.state('base.pay', {
+			url: '/pay/:orderId',
+			templateUrl: 'pay.html',
+			controller: 'PayController'
 		})
 
 		$httpProvider.defaults.post = {'Content-Type': 'application/x-www-form-urlencoded'};

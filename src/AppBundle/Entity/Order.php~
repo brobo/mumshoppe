@@ -17,6 +17,8 @@ class Order {
     public function __construct($customer, $mum) {
         $this->customer = $customer;
         $this->mum = $mum;
+        $this->deposited = false;
+        $this->paid = false;
         $this->created = new \DateTime('now');
     }
 
@@ -38,12 +40,24 @@ class Order {
 	protected $deposited;
 
 	/**
+	 * @ORM\OneToOne(targetEntity="Transaction")
+	 * @ORM\JoinColumn(name="deposit_id", referencedColumnName="id")
+	 */
+	protected $deposit;
+
+	/**
 	 * @ORM\Column(type="boolean")
 	 */
 	protected $paid;
 
+	/**
+	 * @ORM\OneToOne(targetEntity="Transaction")
+	 * @ORM\JoinColumn(name="payment_id", referencedColumnName="id")
+	 */
+	protected $payment;
+
     /**
-     * @ORM\ManyToMany(targetEntity="Customer", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="orders")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
     protected $customer;
@@ -63,6 +77,29 @@ class Order {
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Order
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 
     /**
@@ -112,6 +149,29 @@ class Order {
     }
 
     /**
+     * Set customer
+     *
+     * @param \AppBundle\Entity\Customer $customer
+     * @return Order
+     */
+    public function setCustomer(\AppBundle\Entity\Customer $customer = null)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get customer
+     *
+     * @return \AppBundle\Entity\Customer 
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
      * Set mum
      *
      * @param \AppBundle\Entity\Mum $mum
@@ -132,28 +192,5 @@ class Order {
     public function getMum()
     {
         return $this->mum;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     * @return Order
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime 
-     */
-    public function getCreated()
-    {
-        return $this->created;
     }
 }
